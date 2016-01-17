@@ -120,9 +120,6 @@ NSInteger const kGiphySearchNumbers = 50;
 
 - (void)queryAXCGiphy:(NSString *)searchText
 {
-    // self.searchedText = searchText;
-    NSLog(@"seached %@", searchText);
-    
     [AXCGiphy searchGiphyWithTerm:searchText
                             limit:self.numberOfCells
                            offset:0
@@ -147,9 +144,6 @@ NSInteger const kGiphySearchNumbers = 50;
     [self.collectionView scrollToItemAtIndexPath:indexPath
                                 atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
     [self.view layoutIfNeeded];
-    
-    //if (self.isCell){}
-    
 }
 
 - (void)loadCells
@@ -244,7 +238,7 @@ NSInteger const kGiphySearchNumbers = 50;
 }
 
 #pragma mark - Notifications
-- (void) reachabilityChanged: (NSNotification *)notification
+- (void)reachabilityChanged: (NSNotification *)notification
 {
     NSNumber *statusNumber = notification.userInfo[AFNetworkingReachabilityNotificationStatusItem];
     AFNetworkReachabilityStatus status = [statusNumber integerValue];

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B4DBFFE21C47AC720043AA4C"
+               BlueprintIdentifier = "B48EC4B51C4C4E6000444DAD"
                BuildableName = "Giphy.app"
                BlueprintName = "Giphy"
                ReferencedContainer = "container:Giphy.xcodeproj">
@@ -28,11 +28,31 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B48EC4CE1C4C4E6000444DAD"
+               BuildableName = "GiphyTests.xctest"
+               BlueprintName = "GiphyTests"
+               ReferencedContainer = "container:Giphy.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B48EC4D91C4C4E6100444DAD"
+               BuildableName = "GiphyUITests.xctest"
+               BlueprintName = "GiphyUITests"
+               ReferencedContainer = "container:Giphy.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B4DBFFE21C47AC720043AA4C"
+            BlueprintIdentifier = "B48EC4B51C4C4E6000444DAD"
             BuildableName = "Giphy.app"
             BlueprintName = "Giphy"
             ReferencedContainer = "container:Giphy.xcodeproj">
@@ -55,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B4DBFFE21C47AC720043AA4C"
+            BlueprintIdentifier = "B48EC4B51C4C4E6000444DAD"
             BuildableName = "Giphy.app"
             BlueprintName = "Giphy"
             ReferencedContainer = "container:Giphy.xcodeproj">
@@ -74,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B4DBFFE21C47AC720043AA4C"
+            BlueprintIdentifier = "B48EC4B51C4C4E6000444DAD"
             BuildableName = "Giphy.app"
             BlueprintName = "Giphy"
             ReferencedContainer = "container:Giphy.xcodeproj">

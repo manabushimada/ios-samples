@@ -9,10 +9,30 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>GiphyTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>GiphyUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B4DBFFE21C47AC720043AA4C</key>
+		<key>B48EC4B51C4C4E6000444DAD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B48EC4CE1C4C4E6000444DAD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B48EC4D91C4C4E6100444DAD</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -34,6 +34,13 @@ ScrollViewWithButtonsDelegate>
 @property (strong, nonatomic) NSArray                        *categoriesButtons;
 @property (assign, nonatomic) NSInteger                      numberOfCells;
 
+- (void)queryAXCGiphy:(NSString *)searchText;
+- (void)cellUpToTop;
+- (void)loadCells;
+- (void)didAlertStates:(NSUInteger)status;
+- (void)createCategoriesButtons;
+- (void)highlightOffCategoriesButtons;
+- (void)reachabilityChanged: (NSNotification *)notification;
 
 @end
 
