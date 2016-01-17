@@ -52,6 +52,7 @@ Carthage/Build
 fastlane/report.xml
 fastlane/screenshots
 
-Pods
-Podfile.lock
-Build
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcworkspace/contents.xcworkspacedata
+.DS_Store
