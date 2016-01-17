@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>categories</key>
+	<array>
+		<string>COLORFUL</string>
+		<string>GHIBLI</string>
+		<string>WTF</string>
+		<string>RAINBOW</string>
+		<string>GEOMETRY</string>
+		<string>CATS</string>
+		<string>BIRDS</string>
+		<string>LONDON</string>
+		<string>WATERFALL</string>
+		<string>SHIT</string>
+		<string>AMAZING</string>
+		<string>RAIN</string>
+		<string>WOW</string>
+		<string>KAWAII</string>
+		<string>FUCK!</string>
+		<string>AKIRA</string>
+	</array>
+</dict>
+</plist>
