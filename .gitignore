@@ -56,3 +56,5 @@ fastlane/screenshots
 !*.xcodeproj/project.pbxproj
 !*.xcworkspace/contents.xcworkspacedata
 .DS_Store
+
+
