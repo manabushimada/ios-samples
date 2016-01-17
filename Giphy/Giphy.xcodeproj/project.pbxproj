@@ -13,6 +13,7 @@
 		B470FEA21C4C513000737CD6 /* ScrollViewWithButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = B470FE9F1C4C513000737CD6 /* ScrollViewWithButtons.m */; };
 		B470FEA31C4C515900737CD6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4C01C4C4E6000444DAD /* ViewController.m */; };
 		B470FEA41C4C515B00737CD6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4C01C4C4E6000444DAD /* ViewController.m */; };
+		B471E9CC1C4C5F89002219F9 /* GiphyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4D31C4C4E6000444DAD /* GiphyTests.m */; };
 		B48EC4BB1C4C4E6000444DAD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4BA1C4C4E6000444DAD /* main.m */; };
 		B48EC4BE1C4C4E6000444DAD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4BD1C4C4E6000444DAD /* AppDelegate.m */; };
 		B48EC4C11C4C4E6000444DAD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4C01C4C4E6000444DAD /* ViewController.m */; };
@@ -373,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B470FEA31C4C515900737CD6 /* ViewController.m in Sources */,
+				B471E9CC1C4C5F89002219F9 /* GiphyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

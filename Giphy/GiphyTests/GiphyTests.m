@@ -8,13 +8,9 @@
 
 #import <XCTest/XCTest.h>
 #import "ViewController.h"
-#import "GiphyCollectionViewCell.h"
-
-#define NETWORK_TIMEOUT_DURATION 5
 
 @interface GiphyTests : XCTestCase
 @property (nonatomic, strong) ViewController *viewController;
-@property (nonatomic, strong) GiphyCollectionViewCell *collectionCell;
 @end
 
 @implementation GiphyTests
@@ -24,7 +20,6 @@
     // Put setup code here. This method is called before the invocation of each test method in the class.
     
     self.viewController = [ViewController new];
-    [AXCGiphy setGiphyAPIKey:kGiphyPublicAPIKey];
 }
 
 - (void)tearDown {
