@@ -31,6 +31,7 @@ NSInteger const kGiphySearchNumbers = 50;
     [AXCGiphy setGiphyAPIKey:kGiphyPublicAPIKey];
     self.numberOfCells = kGiphySearchNumbers;
 
+    // Set a default keyword for quering Giphy API
     self.searchedText = @"David Bowie";
     self.searchBar.text = self.searchedText;
     [self queryAXCGiphy:self.searchedText];
@@ -64,7 +65,7 @@ NSInteger const kGiphySearchNumbers = 50;
     
     cell.giphyImageView.image = nil;
     
-    // Highlight for the selected cell
+    // Set a colour of a selected cell
     cell.selectedBackgroundView = nil;
     if (cell.selected)
     {
@@ -79,12 +80,11 @@ NSInteger const kGiphySearchNumbers = 50;
     
     [cell startActiveIndicator];
     
+    // Download a gif
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager downloadImageWithURL:gif.fixedHeightDownsampledImage.url
                           options:SDWebImageRetryFailed
                          progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                             // progression tracking code
-                             // NSLog(@"%dKB", receivedSize / 1000);
                          }
                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
                             if (image)
@@ -139,7 +139,7 @@ NSInteger const kGiphySearchNumbers = 50;
 
 - (void)cellUpToTop
 {
-    // Move the first section at the top
+    // Move cells to the top
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.collectionView scrollToItemAtIndexPath:indexPath
                                 atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
@@ -244,6 +244,7 @@ NSInteger const kGiphySearchNumbers = 50;
     AFNetworkReachabilityStatus status = [statusNumber integerValue];
     
     if (status) {
+        // Show an alert message if a device is out of connection.
         [self didAlertStates:AlertStateNoSearchResults];
     }
     
