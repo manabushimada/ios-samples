@@ -10,6 +10,9 @@
 
 #import "ScrollViewWithButtons.h"
 #import "GiphyCollectionViewCell.h"
+#import <Giphy-iOS/AXCGiphy.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <AFNetworking/AFNetworking.h>
 
 enum
 {

@@ -8,10 +8,6 @@
 
 #import "ViewController.h"
 
-#import <Giphy-iOS/AXCGiphy.h>
-#import <SDWebImage/UIImageView+WebCache.h>
-#import <AFNetworking/AFNetworking.h>
-
 #define kGiphyCollectionCellDefaultColor  [UIColor clearColor]
 #define kGiphyCollectionCellSelectedColor  [UIColor magentaColor]
 

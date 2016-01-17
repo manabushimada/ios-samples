@@ -19,7 +19,6 @@
 		B48EC4C41C4C4E6000444DAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B48EC4C21C4C4E6000444DAD /* Main.storyboard */; };
 		B48EC4C61C4C4E6000444DAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B48EC4C51C4C4E6000444DAD /* Assets.xcassets */; };
 		B48EC4C91C4C4E6000444DAD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B48EC4C71C4C4E6000444DAD /* LaunchScreen.storyboard */; };
-		B48EC4D41C4C4E6000444DAD /* GiphyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4D31C4C4E6000444DAD /* GiphyTests.m */; };
 		B48EC4DF1C4C4E6100444DAD /* GiphyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B48EC4DE1C4C4E6100444DAD /* GiphyUITests.m */; };
 /* End PBXBuildFile section */
 
@@ -374,7 +373,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B470FEA31C4C515900737CD6 /* ViewController.m in Sources */,
-				B48EC4D41C4C4E6000444DAD /* GiphyTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
