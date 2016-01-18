@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import "ViewController.h"
 
+#define NETWORK_TIMEOUT_DURATION 5
+
 @interface GiphyTests : XCTestCase
 @property (nonatomic, strong) ViewController *viewController;
 @end
@@ -29,7 +31,24 @@
 
 - (void)testQueryGiphyAPI
 {
-    XCTAssertNoThrow([self.viewController queryAXCGiphy:@"test"]);
+     XCTestExpectation *expectation = [self expectationWithDescription:@"fetch results from giphy api"];
+    
+    ;
+    XCTAssertNotNil(self.viewController.giphyResults, @"fetched");
+    [expectation fulfill];
+    
+    
+    [self waitForExpectationsWithTimeout:NETWORK_TIMEOUT_DURATION handler:^(NSError *error) {
+        if (error) {
+            NSLog(@"Timeout Error: %@", error);
+        }
+    }];
+    
 }
 
+- (void)testCreateButtons
+{
+    [self.viewController createCategoriesButtons];
+    XCTAssertNotNil(self.viewController.categoriesButtons, @"created");
+}
 @end

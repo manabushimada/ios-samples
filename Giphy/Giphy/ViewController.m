@@ -199,11 +199,13 @@ NSInteger const kGiphySearchNumbers = 50;
     switch (status) {
         case AlertStateNoSearchResults:
         {
+            // show an alert message if no search results
             [[[UIAlertView alloc] initWithTitle:@"No Search Results" message:@"Type again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
             break;
         case AlertStateNoNetwork:
         {
+            // Show an alert message if a device is out of connection.
             [[[UIAlertView alloc] initWithTitle:@"No Network" message:@"You appear to be offline. Please connect to view this page." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
             break;
@@ -240,7 +242,6 @@ NSInteger const kGiphySearchNumbers = 50;
     AFNetworkReachabilityStatus status = [statusNumber integerValue];
     
     if (status) {
-        // Show an alert message if a device is out of connection.
         [self didAlertStates:AlertStateNoSearchResults];
     }
     
