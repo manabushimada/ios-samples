@@ -8,16 +8,42 @@
 
 #import "ViewController.h"
 
+@import AVFoundation;
+
 @interface ViewController ()
+{
+    AVAudioPlayer *audioPlayer;
+}
+
+
 
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    /*----------------------------------------------------------------------------*
+     * Load a mp3 sound
+     *----------------------------------------------------------------------------*/
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"no4" ofType:@"mp3"];
+    NSURL* file = [NSURL fileURLWithPath:path];
+    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:file error:nil];
+    [audioPlayer prepareToPlay];
 }
+
+
+- (IBAction)playButtonPressed:(id)sender
+{
+    if ([audioPlayer isPlaying]) {
+        [audioPlayer pause];
+    } else {
+        [audioPlayer play];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

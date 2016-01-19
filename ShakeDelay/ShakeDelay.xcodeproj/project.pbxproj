@@ -15,6 +15,7 @@
 		B4A40D541C4EDCEC006002BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4A40D521C4EDCEC006002BB /* LaunchScreen.storyboard */; };
 		B4A40D5F1C4EDCEC006002BB /* ShakeDelayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B4A40D5E1C4EDCEC006002BB /* ShakeDelayTests.m */; };
 		B4A40D6A1C4EDCEC006002BB /* ShakeDelayUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B4A40D691C4EDCEC006002BB /* ShakeDelayUITests.m */; };
+		B4A8B66F1C4EEAAC00FB2EC4 /* no4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4A8B66E1C4EEAAC00FB2EC4 /* no4.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B4A40D651C4EDCEC006002BB /* ShakeDelayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShakeDelayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4A40D691C4EDCEC006002BB /* ShakeDelayUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShakeDelayUITests.m; sourceTree = "<group>"; };
 		B4A40D6B1C4EDCEC006002BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4A8B66E1C4EEAAC00FB2EC4 /* no4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = no4.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				B4A40D481C4EDCEC006002BB /* AppDelegate.m */,
 				B4A40D4A1C4EDCEC006002BB /* ViewController.h */,
 				B4A40D4B1C4EDCEC006002BB /* ViewController.m */,
+				B4A8B66D1C4EEAAC00FB2EC4 /* Audios */,
 				B4A40D4D1C4EDCEC006002BB /* Main.storyboard */,
 				B4A40D501C4EDCEC006002BB /* Assets.xcassets */,
 				B4A40D521C4EDCEC006002BB /* LaunchScreen.storyboard */,
@@ -139,6 +142,15 @@
 			);
 			path = ShakeDelayUITests;
 			sourceTree = "<group>";
+		};
+		B4A8B66D1C4EEAAC00FB2EC4 /* Audios */ = {
+			isa = PBXGroup;
+			children = (
+				B4A8B66E1C4EEAAC00FB2EC4 /* no4.mp3 */,
+			);
+			name = Audios;
+			path = resources/Audios;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -245,6 +257,7 @@
 			files = (
 				B4A40D541C4EDCEC006002BB /* LaunchScreen.storyboard in Resources */,
 				B4A40D511C4EDCEC006002BB /* Assets.xcassets in Resources */,
+				B4A8B66F1C4EEAAC00FB2EC4 /* no4.mp3 in Resources */,
 				B4A40D4F1C4EDCEC006002BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +509,7 @@
 				B4A40D701C4EDCEC006002BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4A40D711C4EDCEC006002BB /* Build configuration list for PBXNativeTarget "ShakeDelayTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +518,7 @@
 				B4A40D731C4EDCEC006002BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4A40D741C4EDCEC006002BB /* Build configuration list for PBXNativeTarget "ShakeDelayUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +527,7 @@
 				B4A40D761C4EDCEC006002BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
