@@ -18,24 +18,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-lQ-aDb">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZS-eW-Guh" customClass="EZAudioPlot">
                                 <rect key="frame" x="-4" y="0.0" width="383" height="667"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="48"/>
-                                <state key="normal" title="JUST TAP"/>
-                                <connections>
-                                    <action selector="playButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TF7-zW-FwV"/>
-                                </connections>
-                            </button>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-lQ-aDb">
+                                        <rect key="frame" x="0.0" y="0.0" width="383" height="667"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="48"/>
+                                        <state key="normal" title="JUST TAP"/>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TF7-zW-FwV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fJk-lQ-aDb" secondAttribute="bottom" id="3Fc-Pg-Rz4"/>
-                            <constraint firstItem="fJk-lQ-aDb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="YF1-O2-xlC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fJk-lQ-aDb" secondAttribute="trailing" constant="-20" id="e36-GB-re9"/>
-                            <constraint firstItem="fJk-lQ-aDb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="uZH-1g-DWa"/>
+                            <constraint firstItem="YZS-eW-Guh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="9Ra-ii-8QK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YZS-eW-Guh" secondAttribute="trailing" constant="-20" id="aNS-Bp-uV2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YZS-eW-Guh" secondAttribute="bottom" id="e6C-fp-I7r"/>
+                            <constraint firstItem="YZS-eW-Guh" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="fM9-No-5uF"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="audioPlot" destination="YZS-eW-Guh" id="QE8-3T-gr1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
