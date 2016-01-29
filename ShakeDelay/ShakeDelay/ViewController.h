@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import <EZAudio.h>
+
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet EZAudioPlot *audioPlot;
+
+@property (nonatomic, strong) EZAudioFile *audioFile;
+@property (nonatomic, strong) EZAudioPlayer *player;
 
 @end
 
