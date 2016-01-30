@@ -11,6 +11,7 @@
 @interface NSString (Sanitisation)
 
 + (NSString *)stringByRemovingSpaces:(NSString *)string;
-
++ (NSString *)stringByRemovingAlphabets:(NSString *)string;
++ (BOOL)isStringContainingCountryCode:(NSString *)string;
 
 @end

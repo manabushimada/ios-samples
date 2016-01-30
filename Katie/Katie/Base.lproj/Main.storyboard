@@ -33,13 +33,18 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="NKv-Wn-J6l"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zmg-dU-5tO">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.21176470588235294" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="1t0-Vz-wS0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="2IJ-Ce-WRo"/>
                             <constraint firstItem="nay-ns-8xN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="4p8-NH-ggC"/>
+                            <constraint firstItem="zmg-dU-5tO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hhd-1O-by5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1t0-Vz-wS0" secondAttribute="trailing" constant="-24" id="IkF-l0-Mzw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1t0-Vz-wS0" secondAttribute="bottom" id="L2Z-7d-ce4"/>
+                            <constraint firstItem="zmg-dU-5tO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XVX-Mt-O2g"/>
                             <constraint firstItem="nay-ns-8xN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Yww-2f-Ugi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nay-ns-8xN" secondAttribute="trailing" constant="-20" id="kqk-Yr-ao8"/>
                             <constraint firstItem="1t0-Vz-wS0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-24" id="rrI-gx-LiZ"/>
@@ -50,6 +55,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="indicatorView" destination="zmg-dU-5tO" id="BX4-eq-qnE"/>
                         <outlet property="searchBar" destination="nay-ns-8xN" id="Sgp-kl-TEk"/>
                         <outlet property="searchDisplayController" destination="vQq-CB-FPo" id="2mh-Ei-3TN"/>
                         <outlet property="tableView" destination="1t0-Vz-wS0" id="toE-1g-Xg6"/>

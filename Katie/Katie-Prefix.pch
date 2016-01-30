@@ -1,0 +1,32 @@
+//
+//  Katie-Prefix.pch
+//  Katie
+//
+//  Created by manabu shimada on 29/01/2016.
+//  Copyright © 2016 manabu shimada. All rights reserved.
+//
+
+#ifndef Katie_Prefix_pch
+#define Katie_Prefix_pch
+
+/*----------------------------------------------------------------------------*
+ * Debugging logs
+ * Thanks to http://stackoverflow.com/questions/969130/DLog-tips-and-tricks
+ *----------------------------------------------------------------------------*/
+#ifdef DEBUG
+#   define CHIRP_LOG_CURRENT_FILE [[NSString stringWithUTF8String:__FILE__] componentsSeparatedByString:@"/"].lastObject
+#   define VLog(fmt, ...) NSLog((@"%s [line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#   define DLog(fmt, ...) NSLog((@"[%@] " fmt),  CHIRP_LOG_CURRENT_FILE, ##__VA_ARGS__);
+#else
+#   define VLog(...)
+#   define DLog(...)
+#endif
+#define ALog(fmt, ...) NSLog((@"%s [line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#ifdef DEBUG
+#   define ULog(fmt, ...)  { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%s\n [Line %d] ", __PRETTY_FUNCTION__, __LINE__] message:[NSString stringWithFormat:fmt, ##__VA_ARGS__]  delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]; [alert show]; }
+#else
+#   define ULog(...)
+#endif
+
+
+#endif /* Katie_Prefix_pch */

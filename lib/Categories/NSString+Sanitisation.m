@@ -12,16 +12,30 @@
 
 + (NSString *)stringByRemovingSpaces:(NSString *)string
 {
-    if (![string containsString:@" "])
-    {
-        return string;
-    }
-    
     [string stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSArray *words = [string componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *noSpaceString = [words componentsJoinedByString:@""];
     
     return noSpaceString;
+}
+
++ (NSString *)stringByRemovingAlphabets:(NSString *)string
+{
+    if ([string rangeOfCharacterFromSet:[NSCharacterSet letterCharacterSet]].location == NSNotFound)
+    {
+        return string;
+    }
+    return @"unknow phone number";
+}
+
++ (BOOL)isStringContainingCountryCode:(NSString *)string
+{
+    if ([[string substringToIndex:1] isEqualToString:@"+"])
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end

@@ -8,6 +8,9 @@
 
 #import "ContactsViewController.h"
 
+#import "KatieNetworkManager.h"
+#import "KatieAppConstants.h"
+
 @interface ContactsViewController ()
 {
     NSArray *searchResults;
@@ -17,7 +20,7 @@
 @property (nonatomic, strong) NSMutableArray *phoneNumbersData;
 @property (nonatomic, strong) NSMutableArray *apContact;
 @property (nonatomic, strong) APAddressBook *addressBook;
-
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -29,11 +32,43 @@
     [super viewDidLoad];
     
     [self setupNavigationItem];
+    [self setupRefreshControl];
+    
+    /*----------------------------------------------------------------------------*
+     * Instantiate the fetchedResultsController
+     *----------------------------------------------------------------------------*/
+    NSError *error;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        exit(-1);  // Fail
+    }
     
     [self.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
     [self.tableView setBackgroundColor:[UIColor clearColor]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [KatieDataManager registerMyContact];
+    self.namesData = [NSMutableArray new];
+    self.phoneNumbersData = [NSMutableArray new];
+    self.apContact = [NSMutableArray new];
+    self.addressBook = [[APAddressBook alloc] init];
+    __weak typeof(self) weakSelf = self;
+    [self.addressBook startObserveChangesWithCallback:^
+     {
+         [weakSelf loadContacts];
+     }];
+    [self loadContacts];
+    
+    
+    if (self.fetchedResultsController.fetchedObjects.count == 0 && self.apContact.count == 0) {
+            [KatieDataManager registerMyContacts:self.apContact];
+    } else {
+        for (int i = 0; i < self.fetchedResultsController.fetchedObjects.count; i++) {
+            DLog(@"fetched data %@", self.fetchedResultsController.fetchedObjects[i]);
+        }
+    }
+    
+    //[[KatieNetworkManager sharedManager] queryLookupAPIByPhoneNumber:@"+447857242152"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -44,18 +79,6 @@
      * Setup my tableView settings
      *----------------------------------------------------------------------------*/
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"ContactCell"];
-
-    self.namesData = [NSMutableArray new];
-    self.phoneNumbersData = [NSMutableArray new];
-    self.apContact = [NSMutableArray new];
-    
-    self.addressBook = [[APAddressBook alloc] init];
-    __weak typeof(self) weakSelf = self;
-    [self.addressBook startObserveChangesWithCallback:^
-     {
-         [weakSelf loadContacts];
-     }];
-    [self loadContacts];
 }
 
 #pragma mark - UITableView Delegate
@@ -107,11 +130,6 @@
     {
         [cell updateWithModel:self.apContact[indexPath.row]];
     }
-
-    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    //
-//    NSDictionary *contactInfoDict = [self.contactData objectAtIndex:indexPath.row];
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [contactInfoDict objectForKey:@"firstName"], [contactInfoDict objectForKey:@"lastName"]];
     
     return cell;
 }
@@ -131,7 +149,7 @@
     
     if (!tableView.isEditing)
     {
-        // Call this number
+        // About to Call this number
         NSString *phoneNumber = self.phoneNumbersData[indexPath.row];
         [self phoneCallButtonPressed:[NSString stringByRemovingSpaces:phoneNumber]];
     }
@@ -160,8 +178,11 @@
 
 - (void)loadContacts
 {
-    //[self.memoryStorage removeAllTableItems];
-    //[self.activity startAnimating];
+    // CTODO: lear all cells first
+    //[self.apContact removeAllObjects];
+    
+    //[[KatieNeworkManager sharedManager] queryJSONFromLookup];
+    [self.indicatorView startAnimating];
     __weak __typeof(self) weakSelf = self;
     self.addressBook.fieldsMask = APContactFieldAll;
     self.addressBook.sortDescriptors = @[
@@ -174,7 +195,7 @@
     
     [self.addressBook loadContacts:^(NSArray<APContact *> *contacts, NSError *error)
     {
-        //[weakSelf.activity stopAnimating];
+        [weakSelf.indicatorView stopAnimating];
         if (contacts)
         {
             for (APContact *contact in contacts)
@@ -182,13 +203,12 @@
                 // Store APContact objects
                 [weakSelf.apContact addObject:contact];
                 
-                [self.namesData addObject:contact.name.compositeName?contact.name.compositeName:@"untitled contact"];
-                [self.phoneNumbersData addObject:contact.phones[0].number];
+                [weakSelf.namesData addObject:contact.name.compositeName?contact.name.compositeName:@"untitled contact"];
+                [weakSelf.phoneNumbersData addObject:contact.phones[0].number];
             }
             
-            [self.tableView reloadData];
-            //NSLog(@"contact %@", weakSelf.contactData);
-            //[weakSelf.cont addTableItems:contacts];
+            [self queryLookupAPIWithPhoneNumbers:weakSelf.phoneNumbersData];
+            [weakSelf.tableView reloadData];
         }
         else if (error)
         {
@@ -202,6 +222,48 @@
     }];
 }
 
+
+- (void)queryLookupAPIWithPhoneNumbers:(NSArray *)phoneNumbers
+{
+    dispatch_group_t dispatchGroup = dispatch_group_create();
+    for (int i = 0; i < self.phoneNumbersData.count; i++) {
+        dispatch_group_enter(dispatchGroup);
+        NSString *newPhoneNumber = [NSString stringByRemovingAlphabets:phoneNumbers[i]];
+        if (![newPhoneNumber isEqualToString:kKatieUnknowPhoneNumber])
+        {
+            if ([NSString isStringContainingCountryCode:newPhoneNumber])
+            {
+                // Ensure phone number must constain country code itself.
+                NSLog(@"number %@", [NSString stringByRemovingSpaces:newPhoneNumber]);
+                [[KatieNetworkManager sharedManager] getContactDataWithPhoneNumber:[NSString stringByRemovingSpaces:newPhoneNumber]];
+            }
+            else
+            {
+                // unknown carrier
+            }
+        }
+        
+    }
+    
+    dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^{
+        // update UI here
+    });
+}
+
+#pragma mark - Setups
+
+- (void)setupRefreshControl
+{
+    // Initialize the refresh control.
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(reloadTableView)
+                  forControlEvents:UIControlEventValueChanged];
+    
+    [self.tableView addSubview:self.refreshControl];
+}
+
 - (void)setupNavigationItem
 {
     // Set NavigationItem label configuration
@@ -209,6 +271,8 @@
     self.navigationController.navigationBar.titleTextAttributes =
   @{NSForegroundColorAttributeName : [KatieColor yvesKleinBlue], NSFontAttributeName : [KatieFonts katieFontNavigationItem]};
 }
+
+#pragma mark - Actions
 
 - (void)phoneCallButtonPressed:(NSString *)phoneNumber
 {
@@ -230,6 +294,26 @@
         //        [calert show];
     }
 }
+
+- (void)reloadTableView
+{
+    // Reload table data
+    NSError *error;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        exit(-1);  // Fail
+    }
+    
+    [self.tableView reloadData];
+    //[self loadContacts];
+    
+    // End the refreshing
+    if (self.refreshControl) {
+        [self.refreshControl endRefreshing];
+    }
+}
+
 
 #pragma mark - CoreData Settings
 
@@ -285,6 +369,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    // TODO: Need to understand
     [self.tableView endUpdates];
     [self.tableView reloadData];
 }

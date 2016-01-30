@@ -8,26 +8,42 @@
 
 #import "KatieNetworkRequest.h"
 
+#import "KatieAppConstants.h"
+
 @implementation KatieNetworkRequest
 
 
-- (void)queryLookupAPI:(NSUInteger)phoneNumber
+#pragma mark - Authorization
+
++ (NSString *)authorizationString:(NSString *)accountSID withAuthToken:(NSString *)authToken
 {
-    /**
-    NSString *urlAsString = [NSString stringWithFormat:@"https://lookups.twilio.com/v1/PhoneNumbers/+819021668768", coordinate.latitude, coordinate.longitude, PAGE_COUNT, API_KEY];
-    NSURL *url = [[NSURL alloc] initWithString:urlAsString];
-    NSLog(@"%@", urlAsString);
+    if (!accountSID && !authToken)
+    {
+        return nil;
+    }
     
-    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        if (error) {
-            [self.delegate fetchingLookupFailedWithError:error];
-        } else {
-            [self.delegate receivedLookupJSON:data];
-        }
-    }];
-     */
+    NSString *authStr = [NSString stringWithFormat:@"%@:%@", accountSID, authToken];
+    NSData *authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
+    NSString *authDataString = [authData base64EncodedStringWithOptions:0];
+    return [NSString stringWithFormat:@"Basic %@", authDataString];
 }
+
+- (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:kTwilioLookupAccountSidKey password:kTwilioLookupAuthTokenKey];
+    [manager GET:[NSString stringWithFormat:@"%@%@",kTwilioLookupResourceURL, phoneNumber] parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject)
+     {
+         NSLog(@"JSON: %@", responseObject);
+         self.lookupData = responseObject;
+     }
+         failure:^(NSURLSessionTask *operation, NSError *error)
+     {
+         // Carrier is "Unknow"
+         NSLog(@"Error: %@", error);
+     }];
+}
+
 
 
 @end

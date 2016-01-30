@@ -7,16 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFHTTPSessionManager.h>
 
-@protocol KatieNetworkRequestDelegate
-- (void)receivedLookupJSON:(NSData *)objectNotation;
-- (void)fetchingLookupFailedWithError:(NSError *)error;
-@end
+typedef enum
+{
+    LookupRequestMethodGET,
+    LookupRequestMethodPOST,
+    LookupRequestMethodPUT,
+    LookupRequestMethodDELETE
+} LookupRequestMethod;
 
 @interface KatieNetworkRequest : NSObject
 
-@property (weak, nonatomic) id<KatieNetworkRequestDelegate> delegate;
+@property (nonatomic, strong) NSDictionary *lookupData;
 
-//- (void)searchGroupsAtCoordinate:(CLLocationCoordinate2D)coordinate;
++ (NSString *)authorizationString:(NSString *)accountSID withAuthToken:(NSString *)authToken;
+
+- (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber;
 
 @end

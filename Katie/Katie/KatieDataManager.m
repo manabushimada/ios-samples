@@ -7,7 +7,11 @@
 //
 
 #import "KatieDataManager.h"
+
 #import <UIKit/UIKit.h>
+#import <APContact.h>
+
+#import "KatieNetworkManager.h"
 
 static KatieDataManager *sharedMyManager = nil;
 
@@ -102,7 +106,7 @@ static KatieDataManager *sharedMyManager = nil;
     
 }
 
-+ (void)registerMyContact
++ (void)registerMyContacts:(NSArray *)contacts
 {
     NSArray *fetchedObjects;
     NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
@@ -115,14 +119,37 @@ static KatieDataManager *sharedMyManager = nil;
     
     if (fetchedObjects.count == 0)
     {
-        KatieAddressData *addressData = [self newAddressData];
-        [addressData setMyName:[[UIDevice currentDevice] name]];
-        [addressData setCreatedAt:[NSDate date]];
-        
+        KatieAddressData *myAddressData = [self newAddressData];
+        [myAddressData setMyName:[[UIDevice currentDevice] name]];
+        [myAddressData setCreatedAt:[NSDate date]];
         // TODO: register my carrier: post my number to twilio > fetch my carrier from them > set it into CoreData
         [self save];
+        
+        for (APContact *contact in contacts) {
+            KatieAddressData *myContactsData = [self newAddressData];
+            [myContactsData setName:contact.name.compositeName];
+//            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:contact.phones];
+//            [addressData setMobileNumbers:data];
+            [myContactsData setCarrier:[KatieNetworkManager randomCarrier]];
+            [self save];
+        }
     }
 }
 
+//+ (KatieAddressData *)searchAddressDataForPhoneNumber:(NSString *)phoneNumber
+//{
+//    NSArray *fetchedObjects;
+//    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+//    NSFetchRequest *fetch = [NSFetchRequest new];
+//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
+//    [fetch setEntity:entityDescription];
+//    
+//    NSError *error = nil;
+//    fetchedObjects = [moc executeFetchRequest:fetch error:&error];
+//    
+//    if (fetchedObjects.count == 0)
+//    {
+//    }
+//}
 
 @end

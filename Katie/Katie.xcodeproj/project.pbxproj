@@ -59,6 +59,7 @@
 		B45E75341C59674500941E8D /* KatieServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KatieServices.plist; sourceTree = "<group>"; };
 		B45E75371C5967B200941E8D /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Hex.h"; path = "../../lib/Categories/UIColor+Hex.h"; sourceTree = "<group>"; };
 		B45E75381C5967B200941E8D /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Hex.m"; path = "../../lib/Categories/UIColor+Hex.m"; sourceTree = "<group>"; };
+		B474CF381C5BF0EF001EEEB5 /* Katie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Katie-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B47777071C595AB00042B761 /* KatieNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieNetworkManager.h; sourceTree = "<group>"; };
 		B47777081C595AB00042B761 /* KatieNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieNetworkManager.m; sourceTree = "<group>"; };
 		B477770A1C595ACB0042B761 /* KatieNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieNetworkRequest.h; sourceTree = "<group>"; };
@@ -239,7 +240,6 @@
 		B4E361861C5457A00028AE4A /* Katie */ = {
 			isa = PBXGroup;
 			children = (
-				B4E361AC1C5462440028AE4A /* KatieAppConstants.h */,
 				B4A576F51C56F31A00236C39 /* Resources */,
 				B45E75361C59676200941E8D /* Categories */,
 				B4DB59BF1C55A96D0043B7FA /* Utils */,
@@ -249,10 +249,12 @@
 				B4A576F21C56F12F00236C39 /* Custom Views */,
 				B4E3618A1C5457A00028AE4A /* AppDelegate.h */,
 				B4E3618B1C5457A00028AE4A /* AppDelegate.m */,
+				B4E361AC1C5462440028AE4A /* KatieAppConstants.h */,
 				B4E361901C5457A00028AE4A /* Main.storyboard */,
 				B4E361951C5457A00028AE4A /* LaunchScreen.storyboard */,
 				B45E75341C59674500941E8D /* KatieServices.plist */,
 				B4E361981C5457A00028AE4A /* Info.plist */,
+				B474CF381C5BF0EF001EEEB5 /* Katie-Prefix.pch */,
 				B4E361871C5457A00028AE4A /* Supporting Files */,
 			);
 			path = Katie;
@@ -595,6 +597,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Katie-Prefix.pch";
 				INFOPLIST_FILE = Katie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -609,6 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "Katie-Prefix.pch";
 				INFOPLIST_FILE = Katie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

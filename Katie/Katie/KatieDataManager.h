@@ -22,6 +22,8 @@
 + (KatieAddressData *)newAddressData;
 + (KatieLookupData *)newLookupData;
 
-+ (void)registerMyContact;
++ (void)registerMyContacts:(NSArray *)contacts;
++ (KatieAddressData *)searchAddressDataForPhoneNumber:(NSString *)phoneNumber;
++ (KatieAddressData *)searchAddressDataForName:(NSString *)name;
 
 @end

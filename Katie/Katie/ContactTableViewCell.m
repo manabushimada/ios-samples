@@ -10,6 +10,14 @@
 
 #import "KatieNetworkManager.h"
 #import "KatieColor.h"
+#import "NSString+Sanitisation.h"
+
+@interface ContactTableViewCell ()
+{
+    NSMutableArray *namesData;
+}
+
+@end
 
 @implementation ContactTableViewCell
 
@@ -18,6 +26,7 @@
     // Initialization code
     // self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.name.adjustsFontSizeToFitWidth = YES;
+    
 }
 
 
@@ -28,12 +37,13 @@
     self.phoneNumber.text = [self contactPhones:contact];
     
     // TODO: Populate a random carrier into CoreData to make it constant value.
-    NSDictionary *dict = [KatieNetworkManager randomCarrier];
+    NSDictionary *dict = [KatieNetworkManager randomCarrierWithHex];
     NSString *carrier = dict[@"Carrier"];
     NSString *hex = dict[@"Hex"];
     self.carrierLabel.text = carrier;
     self.backgroundColor = [UIColor colorWithHex:hex];
-    
+   
+   // [[KatieNetworkManager sharedManager] queryLookupAPIByPhoneNumber:self.phoneNumber.text];
 }
 
 - (void)searchContactByArrayWithName:(NSArray *)array name:(NSString *)name
