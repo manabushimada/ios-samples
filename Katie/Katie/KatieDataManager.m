@@ -98,14 +98,6 @@ static KatieDataManager *sharedMyManager = nil;
     
 }
 
-+ (KatieLookupData *)newLookupData
-{
-    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
-    KatieLookupData *newLookupData = (KatieLookupData *) [NSEntityDescription insertNewObjectForEntityForName:@"KatieLookupData" inManagedObjectContext:moc];
-    return newLookupData;
-    
-}
-
 + (void)registerMyContacts:(NSArray *)contacts
 {
     NSArray *fetchedObjects;
@@ -119,37 +111,144 @@ static KatieDataManager *sharedMyManager = nil;
     
     if (fetchedObjects.count == 0)
     {
-        KatieAddressData *myAddressData = [self newAddressData];
+        // For an user's device
+        KatieAddressData *myAddressData = [KatieDataManager newAddressData];
         [myAddressData setMyName:[[UIDevice currentDevice] name]];
+        //[myAddressData setMyPhoneNumber:] // Apple doesn't allow us to get my number unfortunately.
         [myAddressData setCreatedAt:[NSDate date]];
-        // TODO: register my carrier: post my number to twilio > fetch my carrier from them > set it into CoreData
-        [self save];
-        
-        for (APContact *contact in contacts) {
-            KatieAddressData *myContactsData = [self newAddressData];
-            [myContactsData setName:contact.name.compositeName];
-//            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:contact.phones];
-//            [addressData setMobileNumbers:data];
-            [myContactsData setCarrier:[KatieNetworkManager randomCarrier]];
-            [self save];
+        [myAddressData setDummyCarrier:[KatieNetworkManager randomCarrier]];
+        [myAddressData setCarrierColor:[KatieNetworkManager randomCarrierDictionary][@"Hex"]];
+        [KatieDataManager save];
+        NSLog(@"saved my address");
+
+        dispatch_group_t dispatchGroup = dispatch_group_create();
+        // For contacts from user's address
+        for (APContact *contact in contacts)
+        {
+            dispatch_group_enter(dispatchGroup);
+            KatieAddressData *myContactsData = [KatieDataManager newAddressData];
+            [myContactsData setContactName:contact.name.compositeName?contact.name.compositeName:@"untitled contact"];
+            [myContactsData setPhoneNumber:contact.phones[0].number];
+            [myContactsData setCreatedAt:[NSDate date]];
+            [KatieDataManager save];
+            
+            NSLog(@"saved my contact address");
         }
+        
+        dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^{
+            // update UI here
+        });
     }
 }
 
-//+ (KatieAddressData *)searchAddressDataForPhoneNumber:(NSString *)phoneNumber
-//{
-//    NSArray *fetchedObjects;
-//    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
-//    NSFetchRequest *fetch = [NSFetchRequest new];
-//    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
-//    [fetch setEntity:entityDescription];
-//    
-//    NSError *error = nil;
-//    fetchedObjects = [moc executeFetchRequest:fetch error:&error];
-//    
-//    if (fetchedObjects.count == 0)
-//    {
-//    }
-//}
++ (KatieAddressData *)searchKatieAddressDataForPhoneNumber:(NSString *)phoneNumber
+{
+    NSArray *fetchedObjects;
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *fetch = [NSFetchRequest new];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
+    [fetch setEntity:entityDescription];
+    
+    NSError *error = nil;
+    fetchedObjects = [moc executeFetchRequest:fetch error:&error];
+    
+    if (fetchedObjects.count > 0)
+    {
+        for (KatieAddressData *addressData in fetchedObjects)
+        {
+            if ([addressData.phoneNumber isEqualToString:phoneNumber]) {
+                return addressData;
+            }
+        }
+    }
+    
+    return nil;
+}
+
++ (KatieAddressData *)searchKatieAddressDataForContactName:(NSString *)contactName
+{
+    NSArray *fetchedObjects;
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *fetch = [NSFetchRequest new];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
+    [fetch setEntity:entityDescription];
+    
+    NSError *error = nil;
+    fetchedObjects = [moc executeFetchRequest:fetch error:&error];
+    
+    if (fetchedObjects.count > 0)
+    {
+        for (KatieAddressData *addressData in fetchedObjects)
+        {
+            if ([addressData.contactName isEqualToString:contactName]) {
+                return addressData;
+            }
+        }
+    }
+    return nil;
+}
+
++ (KatieAddressData *)searchKatieAddressDataForMyName:(NSString *)myName
+{
+    NSArray *fetchedObjects;
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *fetch = [NSFetchRequest new];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
+    [fetch setEntity:entityDescription];
+    
+    NSError *error = nil;
+    fetchedObjects = [moc executeFetchRequest:fetch error:&error];
+    
+    if (fetchedObjects.count > 0)
+    {
+        for (KatieAddressData *addressData in fetchedObjects)
+        {
+            if ([addressData.myName isEqualToString:myName]) {
+                return addressData;
+            }
+        }
+    }
+    return nil;
+}
+
++ (void)deleteAddressData:(KatieAddressData *)addressData
+{
+    if (addressData)
+    {
+        [[KatieDataManager sharedManager].managedObjectContext deleteObject:addressData];
+        [KatieDataManager save];
+    }
+    
+}
+
++ (void)deleteAllAddressData
+{
+    NSManagedObjectContext *managedObjectContext = [KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"KatieAddressData"];
+    [fetchRequest setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *object in fetchedObjects)
+    {
+        [managedObjectContext deleteObject:object];
+        [KatieDataManager save];
+    }
+}
+
++ (NSArray *) allAddressData
+{
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"KatieAddressData"];
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    if (!results) {
+        DLog(@"Error fetching KatieAddressData objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    
+    return results;
+}
 
 @end

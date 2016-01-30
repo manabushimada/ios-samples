@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <AFHTTPSessionManager.h>
+#import "KatieDataManager.h"
+#import "KatieAppConstants.h"
 
 typedef enum
 {
@@ -19,10 +21,12 @@ typedef enum
 
 @interface KatieNetworkRequest : NSObject
 
+@property (nonatomic, strong) KatieAddressData *addressData;
 @property (nonatomic, strong) NSDictionary *lookupData;
 
 + (NSString *)authorizationString:(NSString *)accountSID withAuthToken:(NSString *)authToken;
 
 - (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber;
+- (void)katieAddressDataForContactName:(NSString *)contactName;
 
 @end

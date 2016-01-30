@@ -28,6 +28,30 @@
     return @"unknow phone number";
 }
 
++ (NSString *)stringByAddingCountryCode:(NSString *)string
+{
+    if ([[string substringToIndex:1] isEqualToString:@"+"])
+    {
+        return string;
+    }
+    else if ([[string substringToIndex:2] isEqualToString:@"00"])
+    {
+        string = [string stringByReplacingCharactersInRange:NSMakeRange(0, 2) withString:@"+"];
+        return string;
+    }
+    
+    return string;
+    
+}
+
++ (NSString *)stringByReplacingPhoneNumber:(NSString *)string
+{
+    string = [self stringByRemovingSpaces:string];
+    string = [self stringByAddingCountryCode:string];
+    
+    return string;
+}
+
 + (BOOL)isStringContainingCountryCode:(NSString *)string
 {
     if ([[string substringToIndex:1] isEqualToString:@"+"])

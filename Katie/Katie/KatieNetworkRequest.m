@@ -7,8 +7,7 @@
 //
 
 #import "KatieNetworkRequest.h"
-
-#import "KatieAppConstants.h"
+#import "KatieNetworkManager.h"
 
 @implementation KatieNetworkRequest
 
@@ -34,16 +33,54 @@
     [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:kTwilioLookupAccountSidKey password:kTwilioLookupAuthTokenKey];
     [manager GET:[NSString stringWithFormat:@"%@%@",kTwilioLookupResourceURL, phoneNumber] parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject)
      {
-         NSLog(@"JSON: %@", responseObject);
-         self.lookupData = responseObject;
+         NSLog(@"JSON: %@ Phone Number %@", responseObject, responseObject[kTwilioLookupPhoneNumberKey]);
+         //self.lookupData = responseObject;
+         [self registerLookupJSONResponse:responseObject];
      }
          failure:^(NSURLSessionTask *operation, NSError *error)
      {
-         // Carrier is "Unknow"
+         // TODO: Nonexisting number is "Unknow" filtered by numberOfErrors value
+         //[self registerLookupErrorJSONRessponces];
          NSLog(@"Error: %@", error);
      }];
 }
 
+- (void)registerLookupJSONResponse:(NSDictionary *)data
+{
+    NSLog(@"address data %@ dummy %@", self.addressData.phoneNumber, self.addressData.dummyCarrier);
+    if (self.addressData)
+    {
+        if (!self.addressData.dummyCarrier)
+        {
+            [self.addressData setDummyCarrier:[KatieNetworkManager randomCarrier]];
+            [self.addressData setNationalFormat:data[kTwilioLookupNationalFormatKey]];
+            [self.addressData setCarrierColor:[KatieNetworkManager randomCarrierDictionary][@"Hex"]];
+            [self.addressData setUrl:data[kTwilioLookupUrlKey]];
+            [KatieDataManager save];
+        }
+    }
+}
 
+- (void)katieAddressDataForContactName:(NSString *)contactName
+{
+    if (contactName)
+    {
+        self.addressData = [KatieDataManager searchKatieAddressDataForContactName:contactName];
+        //NSLog(@"original address data %@", self.addressData);
+    }
+}
+
+- (void)registerLookupErrorJSONRessponces
+{
+    if (self.addressData)
+    {
+        if (!self.addressData.dummyCarrier)
+        {
+            [self.addressData setDummyCarrier:@"Unknown"]; // Hex a5a5a5
+            [self.addressData setCarrierColor:@"a5a5a5"];
+            [KatieDataManager save];
+        }
+    }
+}
 
 @end

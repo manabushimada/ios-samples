@@ -12,6 +12,27 @@
 
 #define kKatieUnknowPhoneNumber @"unknow phone number"
 
+
+static NSString * const kKatieCalledAtKey =          @"calledAt";
+static NSString * const kKatieDummyCarrierKey =      @"dummyCarrier";
+static NSString * const kKatieCreatedAtKey =         @"createdAt";
+static NSString * const kKatieFavouriteKey =         @"favourite";
+static NSString * const kKatiePhoneNumberCalledKey = @"phoneNumberCalled";
+static NSString * const kKatiePhoneNumbersKey =      @"phoneNumbers";
+static NSString * const kKatieMyCarrierKey =         @"myCarrier";
+static NSString * const kKatieMyNameKey =            @"myName";
+static NSString * const kKatieMyPhoneNumberKey =     @"myPhoneNumber";
+static NSString * const kKatieContactNameKey =       @"contactName";
+static NSString * const kKatieReceivedAtKey =        @"receivedAt";
+static NSString * const kKatieCarrierKey =           @"carrier";
+static NSString * const kKatieCountryCodeKey =       @"countryCode";
+static NSString * const kKatieNationalFormatKey =    @"nationalFormat";
+static NSString * const kKatiePhoneNumberKey =       @"phoneNumber";
+static NSString * const kKatieUrlKey =               @"url";
+static NSString * const kKatieCarrierColorKey =      @"carrierColor";
+
+
+
 /*----------------------------------------------------------------------------*
  * Twilio Lookup Setup keys
  *----------------------------------------------------------------------------*/

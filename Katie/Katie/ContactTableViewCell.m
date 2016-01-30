@@ -37,7 +37,7 @@
     self.phoneNumber.text = [self contactPhones:contact];
     
     // TODO: Populate a random carrier into CoreData to make it constant value.
-    NSDictionary *dict = [KatieNetworkManager randomCarrierWithHex];
+    NSDictionary *dict = [KatieNetworkManager randomCarrierDictionary];
     NSString *carrier = dict[@"Carrier"];
     NSString *hex = dict[@"Hex"];
     self.carrierLabel.text = carrier;

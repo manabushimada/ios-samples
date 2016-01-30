@@ -10,10 +10,10 @@
 		B407A30B1C5832F700398241 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B407A3091C5832F700398241 /* ContactTableViewCell.m */; };
 		B407A30C1C5832F700398241 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B407A30A1C5832F700398241 /* ContactTableViewCell.xib */; };
 		B432AF311C5ABBC9008256F8 /* NSString+Sanitisation.m in Sources */ = {isa = PBXBuildFile; fileRef = B432AF301C5ABBC9008256F8 /* NSString+Sanitisation.m */; };
-		B45E75321C5965F900941E8D /* KatieLookupData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B45E752F1C5965F900941E8D /* KatieLookupData+CoreDataProperties.m */; };
-		B45E75331C5965F900941E8D /* KatieLookupData.m in Sources */ = {isa = PBXBuildFile; fileRef = B45E75311C5965F900941E8D /* KatieLookupData.m */; };
 		B45E75351C59674500941E8D /* KatieServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = B45E75341C59674500941E8D /* KatieServices.plist */; };
 		B45E75391C5967B200941E8D /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = B45E75381C5967B200941E8D /* UIColor+Hex.m */; };
+		B474CF491C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B474CF461C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m */; };
+		B474CF4A1C5D3885001EEEB5 /* KatieAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = B474CF481C5D3885001EEEB5 /* KatieAddressData.m */; };
 		B47777091C595AB00042B761 /* KatieNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B47777081C595AB00042B761 /* KatieNetworkManager.m */; };
 		B477770C1C595ACB0042B761 /* KatieNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B477770B1C595ACB0042B761 /* KatieNetworkRequest.m */; };
 		B4A576F81C56F31A00236C39 /* mplus-1c-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4A576F71C56F31A00236C39 /* mplus-1c-bold.ttf */; };
@@ -28,8 +28,6 @@
 		B4E361941C5457A00028AE4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4E361931C5457A00028AE4A /* Assets.xcassets */; };
 		B4E361971C5457A00028AE4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E361951C5457A00028AE4A /* LaunchScreen.storyboard */; };
 		B4E361A21C5457A00028AE4A /* KatieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E361A11C5457A00028AE4A /* KatieTests.m */; };
-		B4F32D6C1C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B4F32D691C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.m */; };
-		B4F32D6D1C5AFEEB00BD13BE /* KatieAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = B4F32D6B1C5AFEEB00BD13BE /* KatieAddressData.m */; };
 		ED31CBF6AB818F068BD3F5EB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72540CD9ED7AAC6FBEF021A3 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -52,14 +50,14 @@
 		B407A30A1C5832F700398241 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		B432AF2F1C5ABBC9008256F8 /* NSString+Sanitisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Sanitisation.h"; path = "../../lib/Categories/NSString+Sanitisation.h"; sourceTree = "<group>"; };
 		B432AF301C5ABBC9008256F8 /* NSString+Sanitisation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Sanitisation.m"; path = "../../lib/Categories/NSString+Sanitisation.m"; sourceTree = "<group>"; };
-		B45E752E1C5965F900941E8D /* KatieLookupData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KatieLookupData+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B45E752F1C5965F900941E8D /* KatieLookupData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KatieLookupData+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B45E75301C5965F900941E8D /* KatieLookupData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieLookupData.h; sourceTree = "<group>"; };
-		B45E75311C5965F900941E8D /* KatieLookupData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieLookupData.m; sourceTree = "<group>"; };
 		B45E75341C59674500941E8D /* KatieServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KatieServices.plist; sourceTree = "<group>"; };
 		B45E75371C5967B200941E8D /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Hex.h"; path = "../../lib/Categories/UIColor+Hex.h"; sourceTree = "<group>"; };
 		B45E75381C5967B200941E8D /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Hex.m"; path = "../../lib/Categories/UIColor+Hex.m"; sourceTree = "<group>"; };
 		B474CF381C5BF0EF001EEEB5 /* Katie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Katie-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		B474CF451C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KatieAddressData+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B474CF461C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KatieAddressData+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B474CF471C5D3885001EEEB5 /* KatieAddressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieAddressData.h; sourceTree = "<group>"; };
+		B474CF481C5D3885001EEEB5 /* KatieAddressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieAddressData.m; sourceTree = "<group>"; };
 		B47777071C595AB00042B761 /* KatieNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieNetworkManager.h; sourceTree = "<group>"; };
 		B47777081C595AB00042B761 /* KatieNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieNetworkManager.m; sourceTree = "<group>"; };
 		B477770A1C595ACB0042B761 /* KatieNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieNetworkRequest.h; sourceTree = "<group>"; };
@@ -87,10 +85,6 @@
 		B4E361A11C5457A00028AE4A /* KatieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KatieTests.m; sourceTree = "<group>"; };
 		B4E361A31C5457A00028AE4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4E361AC1C5462440028AE4A /* KatieAppConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KatieAppConstants.h; sourceTree = "<group>"; };
-		B4F32D681C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KatieAddressData+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B4F32D691C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KatieAddressData+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B4F32D6A1C5AFEEB00BD13BE /* KatieAddressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieAddressData.h; sourceTree = "<group>"; };
-		B4F32D6B1C5AFEEB00BD13BE /* KatieAddressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieAddressData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,14 +196,10 @@
 		B4DB59C11C55A98D0043B7FA /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				B45E752E1C5965F900941E8D /* KatieLookupData+CoreDataProperties.h */,
-				B45E752F1C5965F900941E8D /* KatieLookupData+CoreDataProperties.m */,
-				B45E75301C5965F900941E8D /* KatieLookupData.h */,
-				B45E75311C5965F900941E8D /* KatieLookupData.m */,
-				B4F32D681C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.h */,
-				B4F32D691C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.m */,
-				B4F32D6A1C5AFEEB00BD13BE /* KatieAddressData.h */,
-				B4F32D6B1C5AFEEB00BD13BE /* KatieAddressData.m */,
+				B474CF451C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.h */,
+				B474CF461C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m */,
+				B474CF471C5D3885001EEEB5 /* KatieAddressData.h */,
+				B474CF481C5D3885001EEEB5 /* KatieAddressData.m */,
 				B4DB59DA1C55AE290043B7FA /* KatieDataManager.h */,
 				B4DB59DB1C55AE290043B7FA /* KatieDataManager.m */,
 				B4DB59C21C55ABA40043B7FA /* KatieModel.xcdatamodeld */,
@@ -454,7 +444,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B45E75321C5965F900941E8D /* KatieLookupData+CoreDataProperties.m in Sources */,
 				B45E75391C5967B200941E8D /* UIColor+Hex.m in Sources */,
 				B477770C1C595ACB0042B761 /* KatieNetworkRequest.m in Sources */,
 				B4DB59BB1C5557980043B7FA /* KatieColor.m in Sources */,
@@ -465,11 +454,10 @@
 				B432AF311C5ABBC9008256F8 /* NSString+Sanitisation.m in Sources */,
 				B4DB59DC1C55AE290043B7FA /* KatieDataManager.m in Sources */,
 				B4E3618C1C5457A00028AE4A /* AppDelegate.m in Sources */,
-				B4F32D6D1C5AFEEB00BD13BE /* KatieAddressData.m in Sources */,
+				B474CF491C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m in Sources */,
 				B4E361891C5457A00028AE4A /* main.m in Sources */,
-				B4F32D6C1C5AFEEB00BD13BE /* KatieAddressData+CoreDataProperties.m in Sources */,
 				B47777091C595AB00042B761 /* KatieNetworkManager.m in Sources */,
-				B45E75331C5965F900941E8D /* KatieLookupData.m in Sources */,
+				B474CF4A1C5D3885001EEEB5 /* KatieAddressData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

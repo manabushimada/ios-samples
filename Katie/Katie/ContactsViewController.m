@@ -59,26 +59,16 @@
      }];
     [self loadContacts];
     
-    
-    if (self.fetchedResultsController.fetchedObjects.count == 0 && self.apContact.count == 0) {
-            [KatieDataManager registerMyContacts:self.apContact];
-    } else {
-        for (int i = 0; i < self.fetchedResultsController.fetchedObjects.count; i++) {
-            DLog(@"fetched data %@", self.fetchedResultsController.fetchedObjects[i]);
-        }
-    }
-    
-    //[[KatieNetworkManager sharedManager] queryLookupAPIByPhoneNumber:@"+447857242152"];
+    /*----------------------------------------------------------------------------*
+     * Setup my tableView settings
+     *----------------------------------------------------------------------------*/
+    [self.tableView registerNib:[UINib nibWithNibName:@"ContactTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"ContactCell"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
   
-    /*----------------------------------------------------------------------------*
-     * Setup my tableView settings
-     *----------------------------------------------------------------------------*/
-    [self.tableView registerNib:[UINib nibWithNibName:@"ContactTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"ContactCell"];
 }
 
 #pragma mark - UITableView Delegate
@@ -128,6 +118,8 @@
     }
     else
     {
+        // TODO:
+       // KatieAddressData *addressData = self.fetchedResultsController.fetchedObjects[indexPath.row];
         [cell updateWithModel:self.apContact[indexPath.row]];
     }
     
@@ -198,6 +190,7 @@
         [weakSelf.indicatorView stopAnimating];
         if (contacts)
         {
+            dispatch_group_t serviceGroup = dispatch_group_create();
             for (APContact *contact in contacts)
             {
                 // Store APContact objects
@@ -207,8 +200,16 @@
                 [weakSelf.phoneNumbersData addObject:contact.phones[0].number];
             }
             
-            [self queryLookupAPIWithPhoneNumbers:weakSelf.phoneNumbersData];
+            [KatieDataManager registerMyContacts:weakSelf.apContact];
+            
+            // TODO: Reload after finishing querying completely.
             [weakSelf.tableView reloadData];
+            
+            dispatch_group_notify(serviceGroup,dispatch_get_main_queue(),^{
+                // Query Lookup API after everything has finished
+               [weakSelf updateMyContacts];
+            });
+           
         }
         else if (error)
         {
@@ -223,31 +224,67 @@
 }
 
 
-- (void)queryLookupAPIWithPhoneNumbers:(NSArray *)phoneNumbers
+- (void)queryLookupAPIWithAddressData:(KatieAddressData *)addressData
 {
-    dispatch_group_t dispatchGroup = dispatch_group_create();
-    for (int i = 0; i < self.phoneNumbersData.count; i++) {
-        dispatch_group_enter(dispatchGroup);
-        NSString *newPhoneNumber = [NSString stringByRemovingAlphabets:phoneNumbers[i]];
-        if (![newPhoneNumber isEqualToString:kKatieUnknowPhoneNumber])
-        {
-            if ([NSString isStringContainingCountryCode:newPhoneNumber])
-            {
-                // Ensure phone number must constain country code itself.
-                NSLog(@"number %@", [NSString stringByRemovingSpaces:newPhoneNumber]);
-                [[KatieNetworkManager sharedManager] getContactDataWithPhoneNumber:[NSString stringByRemovingSpaces:newPhoneNumber]];
-            }
-            else
-            {
-                // unknown carrier
-            }
-        }
-        
-    }
+    // TODO: It doesn't correspond a multiple of phone numbers for this app.
+    NSString *newPhoneNumber = [NSString stringByRemovingAlphabets:addressData.phoneNumber];
+    newPhoneNumber = [NSString stringByAddingCountryCode:newPhoneNumber];
+    NSString *contactName = addressData.contactName;
     
-    dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^{
-        // update UI here
-    });
+    dispatch_group_t serviceGroup = dispatch_group_create();
+    if (![newPhoneNumber isEqualToString:kKatieUnknowPhoneNumber] && [NSString isStringContainingCountryCode:newPhoneNumber])
+    {
+        // Ensure a phone number must constain country code itself.
+        NSLog(@"will query Lookup API %@ with %@", [NSString stringByRemovingSpaces:newPhoneNumber], contactName);
+        [[KatieNetworkManager sharedManager] getContactDataWithPhoneNumber:[NSString stringByRemovingSpaces:newPhoneNumber] contactName:contactName];
+    }
+    else
+    {
+        /*----------------------------------------------------------------------------*
+         * An recogniaable or no counrty code phone number code should be saved into CoreData.
+         * Because it won't get Lookup response.
+         *----------------------------------------------------------------------------*/
+        dispatch_group_notify(serviceGroup,dispatch_get_main_queue(),^{
+            // Query Lookup API after everything has finished
+            [self registerErrorContactWithAddressData:addressData];
+        });
+    }
+}
+
+- (void)registerErrorContactWithAddressData:(KatieAddressData *)addressData
+{
+    NSLog(@"error address contact %@", addressData.phoneNumber);
+    if (!addressData.dummyCarrier) {
+        [addressData setDummyCarrier:@"Unknown"];
+        [addressData setCarrierColor:@"a5a5a5"];
+        [KatieDataManager save];
+    }
+}
+
+- (void)updateMyContacts
+{
+     //Register the address book from an user's device
+    for (int i = 0; i < self.fetchedResultsController.fetchedObjects.count; i++)
+    {
+        KatieAddressData *addressData = self.fetchedResultsController.fetchedObjects[i];
+        if (addressData.dummyCarrier)
+        {
+            /*----------------------------------------------------------------------------*
+             * The phone number has been already populated into CoreData.
+             * No need to query Lookup API.
+             *----------------------------------------------------------------------------*/
+            NSLog(@"has been populated with %@ name %@", addressData.phoneNumber, addressData.contactName);
+            continue;
+        }
+        else
+        {
+            /*----------------------------------------------------------------------------*
+             * The phone number has not been saved into CoreData.
+             * Need to query Lookup API.
+             *----------------------------------------------------------------------------*/
+            [self queryLookupAPIWithAddressData:addressData];
+        }
+    }
 }
 
 #pragma mark - Setups
@@ -283,10 +320,6 @@
         [[UIApplication sharedApplication] openURL:phoneUrl];
         
         // Save the phone number for history
-//        KatieAddressData *addressData = [KatieDataManager newAddressData];
-//        [addressData setCalledAt:[NSDate date]];
-//        [addressData setMobileNumberCalled:[NSNumber numberWithInteger:[phoneNumber integerValue]]];
-//        [KatieDataManager save];
     }
     else
     {
@@ -305,8 +338,14 @@
         exit(-1);  // Fail
     }
     
-    [self.tableView reloadData];
     //[self loadContacts];
+    [self.tableView reloadData];
+    
+    NSArray *datas = [KatieDataManager allAddressData];
+    for (KatieAddressData *addressData in datas)
+    {
+        NSLog(@"Data in coredata %@", [addressData dictionaryRepresentation]);
+    }
     
     // End the refreshing
     if (self.refreshControl) {
@@ -315,7 +354,7 @@
 }
 
 
-#pragma mark - CoreData Settings
+#pragma mark - NSFetchedResultsController Delegate
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -349,27 +388,29 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
-    // TODO: Understand what it does
     if (!newIndexPath) {
         return;
     }
     
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        default:
-            break;
-    }
+    // TODO: Start working after taking care of core data
+    
+//    switch (type)
+//    {
+//        case NSFetchedResultsChangeInsert: // Called when inserting a new data into CoreData
+//            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//        case NSFetchedResultsChangeDelete: // Called when deleting it
+//            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        default:
+//            break;
+//    }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    // TODO: Need to understand
+    // Called as soon as data is changed.
     [self.tableView endUpdates];
     [self.tableView reloadData];
 }

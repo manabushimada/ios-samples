@@ -39,16 +39,17 @@ static KatieNetworkManager *_manager = nil;
     return self;
 }
 
-- (void)getContactDataWithPhoneNumber:(NSString *)phoneNumber
+- (void)getContactDataWithPhoneNumber:(NSString *)phoneNumber contactName:(NSString *)contactName
 {
     KatieNetworkRequest *request = [KatieNetworkRequest new];
     [request queryLookupAPIByPhoneNumber:phoneNumber];
+    [request katieAddressDataForContactName:contactName];
 }
 
 
 #pragma mark - Utils
 
-+ (NSDictionary *)randomCarrierWithHex
++ (NSDictionary *)randomCarrierDictionary
 {
     /*----------------------------------------------------------------------------*
      * Lookup by Twilio is a paid service. 
