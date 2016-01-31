@@ -15,6 +15,7 @@
 + (KatieNetworkManager *) sharedManager;
 + (NSString *)randomCarrier;
 + (NSDictionary *)randomCarrierDictionary;
++ (NSString *)carrierColorHex:(NSString *)carrier;
 
 - (void)getContactDataWithPhoneNumber:(NSString *)phoneNumber contactName:(NSString *)contactName;
 

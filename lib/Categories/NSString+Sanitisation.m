@@ -62,4 +62,15 @@
     return NO;
 }
 
++ (BOOL)isStringContainingMultibyteString:(NSString *)string
+{
+    if(![string canBeConvertedToEncoding:NSASCIIStringEncoding])
+    {
+        NSLog(@"string %@", string);
+        return YES;
+    }
+
+    return NO;
+}
+
 @end

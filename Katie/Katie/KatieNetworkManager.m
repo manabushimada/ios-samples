@@ -80,7 +80,20 @@ static KatieNetworkManager *_manager = nil;
     return carrier;
 }
 
-
++ (NSString *)carrierColorHex:(NSString *)carrier
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"KatieServices" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSArray *array = [NSArray arrayWithArray:[dic objectForKey:@"CarrierPicker"]];
+    
+    for (NSDictionary *dict in array) {
+        if ([dict[@"Carrier"] isEqualToString:carrier]) {
+            return dict[@"Hex"];
+        }
+    }
+    
+    return @"000000";
+}
 
 
 @end

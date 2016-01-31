@@ -11,18 +11,9 @@
 #import "KatieDataManager.h"
 #import "KatieAppConstants.h"
 
-typedef enum
-{
-    LookupRequestMethodGET,
-    LookupRequestMethodPOST,
-    LookupRequestMethodPUT,
-    LookupRequestMethodDELETE
-} LookupRequestMethod;
-
 @interface KatieNetworkRequest : NSObject
 
 @property (nonatomic, strong) KatieAddressData *addressData;
-@property (nonatomic, strong) NSDictionary *lookupData;
 
 + (NSString *)authorizationString:(NSString *)accountSID withAuthToken:(NSString *)authToken;
 

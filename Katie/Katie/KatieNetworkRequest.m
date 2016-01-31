@@ -33,8 +33,7 @@
     [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:kTwilioLookupAccountSidKey password:kTwilioLookupAuthTokenKey];
     [manager GET:[NSString stringWithFormat:@"%@%@",kTwilioLookupResourceURL, phoneNumber] parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject)
      {
-         NSLog(@"JSON: %@ Phone Number %@", responseObject, responseObject[kTwilioLookupPhoneNumberKey]);
-         //self.lookupData = responseObject;
+         NSLog(@"JSON: %@ ", responseObject);
          [self registerLookupJSONResponse:responseObject];
      }
          failure:^(NSURLSessionTask *operation, NSError *error)
@@ -54,7 +53,7 @@
         {
             [self.addressData setDummyCarrier:[KatieNetworkManager randomCarrier]];
             [self.addressData setNationalFormat:data[kTwilioLookupNationalFormatKey]];
-            [self.addressData setCarrierColor:[KatieNetworkManager randomCarrierDictionary][@"Hex"]];
+            [self.addressData setCarrierColor:[KatieNetworkManager carrierColorHex:self.addressData.dummyCarrier]];
             [self.addressData setUrl:data[kTwilioLookupUrlKey]];
             [KatieDataManager save];
         }
@@ -65,7 +64,7 @@
 {
     if (contactName)
     {
-        self.addressData = [KatieDataManager searchKatieAddressDataForContactName:contactName];
+        self.addressData = [KatieDataManager searchUnsavedKatieAddressDataForContactName:contactName];
         //NSLog(@"original address data %@", self.addressData);
     }
 }

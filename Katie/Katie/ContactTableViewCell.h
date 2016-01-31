@@ -10,13 +10,17 @@
 
 #import <APContact.h>
 
+#import "KatieAddressData.h"
+
 @interface ContactTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *carrierLabel;
 
-- (void)updateWithModel:(id)model;
-- (void)searchContactByArrayWithName:(NSArray *)array name:(NSString *)name;
+- (void)updateWithAddressData:(KatieAddressData *)addressData;
+- (void)searchContactWithContactName:(NSString *)contactName;
+//- (void)updateWithModel:(id)model;
+//- (void)searchContactByArrayWithName:(NSArray *)array name:(NSString *)name;
 
 @end

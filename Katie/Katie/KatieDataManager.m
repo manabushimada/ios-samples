@@ -105,7 +105,7 @@ static KatieDataManager *sharedMyManager = nil;
     NSFetchRequest *fetch = [NSFetchRequest new];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
     [fetch setEntity:entityDescription];
-
+    
     NSError *error = nil;
     fetchedObjects = [moc executeFetchRequest:fetch error:&error];
     
@@ -117,7 +117,7 @@ static KatieDataManager *sharedMyManager = nil;
         //[myAddressData setMyPhoneNumber:] // Apple doesn't allow us to get my number unfortunately.
         [myAddressData setCreatedAt:[NSDate date]];
         [myAddressData setDummyCarrier:[KatieNetworkManager randomCarrier]];
-        [myAddressData setCarrierColor:[KatieNetworkManager randomCarrierDictionary][@"Hex"]];
+        [myAddressData setCarrierColor:[KatieNetworkManager carrierColorHex:myAddressData.dummyCarrier]];
         [KatieDataManager save];
         NSLog(@"saved my address");
 
@@ -181,6 +181,33 @@ static KatieDataManager *sharedMyManager = nil;
         for (KatieAddressData *addressData in fetchedObjects)
         {
             if ([addressData.contactName isEqualToString:contactName]) {
+                return addressData;
+            }
+        }
+    }
+    return nil;
+}
+
++ (KatieAddressData *)searchUnsavedKatieAddressDataForContactName:(NSString *)contactName
+{
+    NSArray *fetchedObjects;
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *fetch = [NSFetchRequest new];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"KatieAddressData" inManagedObjectContext:moc];
+    [fetch setEntity:entityDescription];
+    
+    NSError *error = nil;
+    fetchedObjects = [moc executeFetchRequest:fetch error:&error];
+    
+    if (fetchedObjects.count > 0)
+    {
+        for (KatieAddressData *addressData in fetchedObjects)
+        {
+            /*----------------------------------------------------------------------------*
+             * Someone perhaps add more than 2 contacts with same name.
+             * So ensure this addressData is checked in contactName and dummyCarrier.
+             *----------------------------------------------------------------------------*/
+            if ([addressData.contactName isEqualToString:contactName] && !addressData.dummyCarrier) {
                 return addressData;
             }
         }

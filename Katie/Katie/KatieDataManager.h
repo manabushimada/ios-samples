@@ -24,6 +24,7 @@
 + (KatieAddressData *)searchKatieAddressDataForPhoneNumber:(NSString *)phoneNumber;
 + (KatieAddressData *)searchKatieAddressDataForContactName:(NSString *)contactName;
 + (KatieAddressData *)searchKatieAddressDataForMyName:(NSString *)myName;
++ (KatieAddressData *)searchUnsavedKatieAddressDataForContactName:(NSString *)contactName;
 
 + (void)deleteAddressData:(KatieAddressData *)addressData;
 + (void)deleteAllAddressData;

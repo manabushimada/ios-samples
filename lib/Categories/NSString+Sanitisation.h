@@ -15,5 +15,6 @@
 + (NSString *)stringByAddingCountryCode:(NSString *)string;
 + (NSString *)stringByReplacingPhoneNumber:(NSString *)string;
 + (BOOL)isStringContainingCountryCode:(NSString *)string;
++ (BOOL)isStringContainingMultibyteString:(NSString *)string;
 
 @end

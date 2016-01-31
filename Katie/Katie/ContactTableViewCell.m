@@ -26,24 +26,33 @@
     // Initialization code
     // self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.name.adjustsFontSizeToFitWidth = YES;
-    
 }
 
+- (void)updateWithAddressData:(KatieAddressData *)addressData
+{
+    self.name.text = addressData.contactName;
+    self.phoneNumber.text = addressData.phoneNumber;
+    self.carrierLabel.text = addressData.dummyCarrier;
+    self.backgroundColor = [UIColor colorWithHex:addressData.carrierColor];
+}
 
+- (void)searchContactWithContactName:(NSString *)contactName
+{
+    KatieAddressData *addressData = [KatieDataManager searchKatieAddressDataForContactName:contactName];
+    [self updateWithAddressData:addressData];
+}
+
+/**
 - (void)updateWithModel:(id)model
 {
     APContact *contact = model;
     self.name.text = [self contactName:contact];
     self.phoneNumber.text = [self contactPhones:contact];
-    
-    // TODO: Populate a random carrier into CoreData to make it constant value.
     NSDictionary *dict = [KatieNetworkManager randomCarrierDictionary];
     NSString *carrier = dict[@"Carrier"];
     NSString *hex = dict[@"Hex"];
     self.carrierLabel.text = carrier;
     self.backgroundColor = [UIColor colorWithHex:hex];
-   
-   // [[KatieNetworkManager sharedManager] queryLookupAPIByPhoneNumber:self.phoneNumber.text];
 }
 
 - (void)searchContactByArrayWithName:(NSArray *)array name:(NSString *)name
@@ -97,6 +106,7 @@
         return @"(No phones)";
     }
 }
+*/
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

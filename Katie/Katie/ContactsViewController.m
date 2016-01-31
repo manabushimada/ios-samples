@@ -114,13 +114,11 @@
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
-        [cell searchContactByArrayWithName:self.apContact name:searchResults[indexPath.row]];
+        [cell searchContactWithContactName:searchResults[indexPath.row]];
     }
     else
     {
-        // TODO:
-       // KatieAddressData *addressData = self.fetchedResultsController.fetchedObjects[indexPath.row];
-        [cell updateWithModel:self.apContact[indexPath.row]];
+        [cell updateWithAddressData:self.fetchedResultsController.fetchedObjects[indexPath.row]];
     }
     
     return cell;
@@ -141,9 +139,18 @@
     
     if (!tableView.isEditing)
     {
+        KatieAddressData *addressData;
+        if (tableView == self.searchDisplayController.searchResultsTableView)
+        {
+            addressData = [KatieDataManager searchKatieAddressDataForContactName:searchResults[indexPath.row]];
+        }
+        else
+        {
+            addressData = self.fetchedResultsController.fetchedObjects[indexPath.row];
+        }
+        
         // About to Call this number
-        NSString *phoneNumber = self.phoneNumbersData[indexPath.row];
-        [self phoneCallButtonPressed:[NSString stringByRemovingSpaces:phoneNumber]];
+        [self phoneCallButtonPressed:[NSString stringByRemovingSpaces:addressData.phoneNumber]];
     }
 }
 
@@ -170,10 +177,6 @@
 
 - (void)loadContacts
 {
-    // CTODO: lear all cells first
-    //[self.apContact removeAllObjects];
-    
-    //[[KatieNeworkManager sharedManager] queryJSONFromLookup];
     [self.indicatorView startAnimating];
     __weak __typeof(self) weakSelf = self;
     self.addressBook.fieldsMask = APContactFieldAll;
@@ -187,7 +190,6 @@
     
     [self.addressBook loadContacts:^(NSArray<APContact *> *contacts, NSError *error)
     {
-        [weakSelf.indicatorView stopAnimating];
         if (contacts)
         {
             dispatch_group_t serviceGroup = dispatch_group_create();
@@ -201,10 +203,7 @@
             }
             
             [KatieDataManager registerMyContacts:weakSelf.apContact];
-            
-            // TODO: Reload after finishing querying completely.
-            [weakSelf.tableView reloadData];
-            
+
             dispatch_group_notify(serviceGroup,dispatch_get_main_queue(),^{
                 // Query Lookup API after everything has finished
                [weakSelf updateMyContacts];
@@ -229,14 +228,17 @@
     // TODO: It doesn't correspond a multiple of phone numbers for this app.
     NSString *newPhoneNumber = [NSString stringByRemovingAlphabets:addressData.phoneNumber];
     newPhoneNumber = [NSString stringByAddingCountryCode:newPhoneNumber];
+    newPhoneNumber = [NSString stringByRemovingSpaces:newPhoneNumber];
     NSString *contactName = addressData.contactName;
     
     dispatch_group_t serviceGroup = dispatch_group_create();
-    if (![newPhoneNumber isEqualToString:kKatieUnknowPhoneNumber] && [NSString isStringContainingCountryCode:newPhoneNumber])
+    if (![newPhoneNumber isEqualToString:kKatieUnknowPhoneNumber]
+        && [NSString isStringContainingCountryCode:newPhoneNumber]
+        && ![NSString isStringContainingMultibyteString:newPhoneNumber])
     {
         // Ensure a phone number must constain country code itself.
-        NSLog(@"will query Lookup API %@ with %@", [NSString stringByRemovingSpaces:newPhoneNumber], contactName);
-        [[KatieNetworkManager sharedManager] getContactDataWithPhoneNumber:[NSString stringByRemovingSpaces:newPhoneNumber] contactName:contactName];
+        NSLog(@"will query Lookup API %@ with %@", newPhoneNumber, contactName);
+        [[KatieNetworkManager sharedManager] getContactDataWithPhoneNumber:newPhoneNumber contactName:contactName];
     }
     else
     {
@@ -245,15 +247,19 @@
          * Because it won't get Lookup response.
          *----------------------------------------------------------------------------*/
         dispatch_group_notify(serviceGroup,dispatch_get_main_queue(),^{
-            // Query Lookup API after everything has finished
             [self registerErrorContactWithAddressData:addressData];
         });
     }
+    
+    dispatch_group_notify(serviceGroup,dispatch_get_main_queue(),^{
+        [self.tableView reloadData];
+        [self.indicatorView stopAnimating];
+    });
 }
 
 - (void)registerErrorContactWithAddressData:(KatieAddressData *)addressData
 {
-    NSLog(@"error address contact %@", addressData.phoneNumber);
+    NSLog(@"error contact %@", addressData.phoneNumber);
     if (!addressData.dummyCarrier) {
         [addressData setDummyCarrier:@"Unknown"];
         [addressData setCarrierColor:@"a5a5a5"];
@@ -263,7 +269,6 @@
 
 - (void)updateMyContacts
 {
-     //Register the address book from an user's device
     for (int i = 0; i < self.fetchedResultsController.fetchedObjects.count; i++)
     {
         KatieAddressData *addressData = self.fetchedResultsController.fetchedObjects[i];
@@ -338,7 +343,7 @@
         exit(-1);  // Fail
     }
     
-    //[self loadContacts];
+    [self updateMyContacts];
     [self.tableView reloadData];
     
     NSArray *datas = [KatieDataManager allAddressData];
@@ -369,10 +374,10 @@
     
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *historyOrder = [[NSSortDescriptor alloc]
-                                   initWithKey:@"createdAt" ascending:NO];
-    [fetchRequest setSortDescriptors:@[historyOrder]];
-    [fetchRequest setFetchBatchSize:20];
+    NSSortDescriptor *alphabetOrder = [[NSSortDescriptor alloc]
+                                   initWithKey:@"contactName" ascending:YES];
+    [fetchRequest setSortDescriptors:@[alphabetOrder]];
+    [fetchRequest setFetchBatchSize:10];
     
     [NSFetchedResultsController deleteCacheWithName:@"KatieAddressData"];
     NSFetchedResultsController *theFetchedResultsController =
@@ -392,20 +397,20 @@
         return;
     }
     
-    // TODO: Start working after taking care of core data
-    
-//    switch (type)
-//    {
-//        case NSFetchedResultsChangeInsert: // Called when inserting a new data into CoreData
-//            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//        case NSFetchedResultsChangeDelete: // Called when deleting it
-//            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-//            break;
-//            
-//        default:
-//            break;
-//    }
+    /**
+    switch (type)
+    {
+        case NSFetchedResultsChangeInsert: // Called when inserting a new data into CoreData
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeDelete: // Called when deleting it
+            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            break;
+    }
+     */
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
