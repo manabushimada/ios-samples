@@ -66,7 +66,6 @@
 {
     if(![string canBeConvertedToEncoding:NSASCIIStringEncoding])
     {
-        NSLog(@"string %@", string);
         return YES;
     }
 

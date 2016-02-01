@@ -74,7 +74,7 @@ static KatieNetworkManager *_manager = nil;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"KatieServices" ofType:@"plist"];
     NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
     NSArray *array = [NSArray arrayWithArray:[dic objectForKey:@"CarrierPicker"]];
-    NSDictionary *dict = array[rand()%array.count];
+    NSDictionary *dict = array[rand()%(array.count-1)]; // -1 to remove 'Unknow' carrier
     NSString *carrier = dict[@"Carrier"];
     
     return carrier;
@@ -93,6 +93,15 @@ static KatieNetworkManager *_manager = nil;
     }
     
     return @"000000";
+}
+
++ (NSArray *)carrierArrayInPlist
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"KatieServices" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSArray *array = [NSArray arrayWithArray:[dic objectForKey:@"CarrierPicker"]];
+
+    return array;
 }
 
 

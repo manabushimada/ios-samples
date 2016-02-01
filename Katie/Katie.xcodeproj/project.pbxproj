@@ -10,10 +10,16 @@
 		B407A30B1C5832F700398241 /* ContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B407A3091C5832F700398241 /* ContactTableViewCell.m */; };
 		B407A30C1C5832F700398241 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B407A30A1C5832F700398241 /* ContactTableViewCell.xib */; };
 		B432AF311C5ABBC9008256F8 /* NSString+Sanitisation.m in Sources */ = {isa = PBXBuildFile; fileRef = B432AF301C5ABBC9008256F8 /* NSString+Sanitisation.m */; };
+		B449EB791C5D9A30000381FA /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB781C5D9A30000381FA /* HistoryViewController.m */; };
+		B449EB7D1C5D9ADE000381FA /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB7B1C5D9ADE000381FA /* HistoryTableViewCell.m */; };
+		B449EB7E1C5D9ADE000381FA /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B449EB7C1C5D9ADE000381FA /* HistoryTableViewCell.xib */; };
+		B449EB831C5DB730000381FA /* KatieAddressData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB801C5DB730000381FA /* KatieAddressData+CoreDataProperties.m */; };
+		B449EB841C5DB730000381FA /* KatieAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB821C5DB730000381FA /* KatieAddressData.m */; };
+		B449EB891C5DB787000381FA /* KatieHistoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB861C5DB787000381FA /* KatieHistoryData.m */; };
+		B449EB8A1C5DB787000381FA /* KatieHistoryData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB881C5DB787000381FA /* KatieHistoryData+CoreDataProperties.m */; };
+		B449EB8E1C5E7C4F000381FA /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B449EB8D1C5E7C4F000381FA /* InfoViewController.m */; };
 		B45E75351C59674500941E8D /* KatieServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = B45E75341C59674500941E8D /* KatieServices.plist */; };
 		B45E75391C5967B200941E8D /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = B45E75381C5967B200941E8D /* UIColor+Hex.m */; };
-		B474CF491C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = B474CF461C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m */; };
-		B474CF4A1C5D3885001EEEB5 /* KatieAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = B474CF481C5D3885001EEEB5 /* KatieAddressData.m */; };
 		B47777091C595AB00042B761 /* KatieNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B47777081C595AB00042B761 /* KatieNetworkManager.m */; };
 		B477770C1C595ACB0042B761 /* KatieNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B477770B1C595ACB0042B761 /* KatieNetworkRequest.m */; };
 		B4A576F81C56F31A00236C39 /* mplus-1c-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4A576F71C56F31A00236C39 /* mplus-1c-bold.ttf */; };
@@ -28,6 +34,9 @@
 		B4E361941C5457A00028AE4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4E361931C5457A00028AE4A /* Assets.xcassets */; };
 		B4E361971C5457A00028AE4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4E361951C5457A00028AE4A /* LaunchScreen.storyboard */; };
 		B4E361A21C5457A00028AE4A /* KatieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E361A11C5457A00028AE4A /* KatieTests.m */; };
+		B4FFC5B51C5E83E2009F138C /* CarrierInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B4FFC5B31C5E83E2009F138C /* CarrierInfoTableViewCell.m */; };
+		B4FFC5B61C5E83E2009F138C /* CarrierInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4FFC5B41C5E83E2009F138C /* CarrierInfoTableViewCell.xib */; };
+		B4FFC5B81C5ECB05009F138C /* KatieDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B4DB59DB1C55AE290043B7FA /* KatieDataManager.m */; };
 		ED31CBF6AB818F068BD3F5EB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72540CD9ED7AAC6FBEF021A3 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -50,14 +59,25 @@
 		B407A30A1C5832F700398241 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		B432AF2F1C5ABBC9008256F8 /* NSString+Sanitisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Sanitisation.h"; path = "../../lib/Categories/NSString+Sanitisation.h"; sourceTree = "<group>"; };
 		B432AF301C5ABBC9008256F8 /* NSString+Sanitisation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Sanitisation.m"; path = "../../lib/Categories/NSString+Sanitisation.m"; sourceTree = "<group>"; };
+		B449EB771C5D9A30000381FA /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		B449EB781C5D9A30000381FA /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		B449EB7A1C5D9ADE000381FA /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
+		B449EB7B1C5D9ADE000381FA /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
+		B449EB7C1C5D9ADE000381FA /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
+		B449EB7F1C5DB730000381FA /* KatieAddressData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KatieAddressData+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B449EB801C5DB730000381FA /* KatieAddressData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KatieAddressData+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B449EB811C5DB730000381FA /* KatieAddressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieAddressData.h; sourceTree = "<group>"; };
+		B449EB821C5DB730000381FA /* KatieAddressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieAddressData.m; sourceTree = "<group>"; };
+		B449EB851C5DB787000381FA /* KatieHistoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieHistoryData.h; sourceTree = "<group>"; };
+		B449EB861C5DB787000381FA /* KatieHistoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieHistoryData.m; sourceTree = "<group>"; };
+		B449EB871C5DB787000381FA /* KatieHistoryData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KatieHistoryData+CoreDataProperties.h"; sourceTree = "<group>"; };
+		B449EB881C5DB787000381FA /* KatieHistoryData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KatieHistoryData+CoreDataProperties.m"; sourceTree = "<group>"; };
+		B449EB8C1C5E7C4F000381FA /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		B449EB8D1C5E7C4F000381FA /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		B45E75341C59674500941E8D /* KatieServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KatieServices.plist; sourceTree = "<group>"; };
 		B45E75371C5967B200941E8D /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Hex.h"; path = "../../lib/Categories/UIColor+Hex.h"; sourceTree = "<group>"; };
 		B45E75381C5967B200941E8D /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Hex.m"; path = "../../lib/Categories/UIColor+Hex.m"; sourceTree = "<group>"; };
 		B474CF381C5BF0EF001EEEB5 /* Katie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Katie-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		B474CF451C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KatieAddressData+CoreDataProperties.h"; sourceTree = "<group>"; };
-		B474CF461C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KatieAddressData+CoreDataProperties.m"; sourceTree = "<group>"; };
-		B474CF471C5D3885001EEEB5 /* KatieAddressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieAddressData.h; sourceTree = "<group>"; };
-		B474CF481C5D3885001EEEB5 /* KatieAddressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieAddressData.m; sourceTree = "<group>"; };
 		B47777071C595AB00042B761 /* KatieNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieNetworkManager.h; sourceTree = "<group>"; };
 		B47777081C595AB00042B761 /* KatieNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KatieNetworkManager.m; sourceTree = "<group>"; };
 		B477770A1C595ACB0042B761 /* KatieNetworkRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KatieNetworkRequest.h; sourceTree = "<group>"; };
@@ -85,6 +105,9 @@
 		B4E361A11C5457A00028AE4A /* KatieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KatieTests.m; sourceTree = "<group>"; };
 		B4E361A31C5457A00028AE4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4E361AC1C5462440028AE4A /* KatieAppConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KatieAppConstants.h; sourceTree = "<group>"; };
+		B4FFC5B21C5E83E2009F138C /* CarrierInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarrierInfoTableViewCell.h; sourceTree = "<group>"; };
+		B4FFC5B31C5E83E2009F138C /* CarrierInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarrierInfoTableViewCell.m; sourceTree = "<group>"; };
+		B4FFC5B41C5E83E2009F138C /* CarrierInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarrierInfoTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +166,12 @@
 				B407A3081C5832F700398241 /* ContactTableViewCell.h */,
 				B407A3091C5832F700398241 /* ContactTableViewCell.m */,
 				B407A30A1C5832F700398241 /* ContactTableViewCell.xib */,
+				B449EB7A1C5D9ADE000381FA /* HistoryTableViewCell.h */,
+				B449EB7B1C5D9ADE000381FA /* HistoryTableViewCell.m */,
+				B449EB7C1C5D9ADE000381FA /* HistoryTableViewCell.xib */,
+				B4FFC5B21C5E83E2009F138C /* CarrierInfoTableViewCell.h */,
+				B4FFC5B31C5E83E2009F138C /* CarrierInfoTableViewCell.m */,
+				B4FFC5B41C5E83E2009F138C /* CarrierInfoTableViewCell.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -189,6 +218,10 @@
 			children = (
 				B4E3618D1C5457A00028AE4A /* ContactsViewController.h */,
 				B4E3618E1C5457A00028AE4A /* ContactsViewController.m */,
+				B449EB771C5D9A30000381FA /* HistoryViewController.h */,
+				B449EB781C5D9A30000381FA /* HistoryViewController.m */,
+				B449EB8C1C5E7C4F000381FA /* InfoViewController.h */,
+				B449EB8D1C5E7C4F000381FA /* InfoViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -196,10 +229,14 @@
 		B4DB59C11C55A98D0043B7FA /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				B474CF451C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.h */,
-				B474CF461C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m */,
-				B474CF471C5D3885001EEEB5 /* KatieAddressData.h */,
-				B474CF481C5D3885001EEEB5 /* KatieAddressData.m */,
+				B449EB871C5DB787000381FA /* KatieHistoryData+CoreDataProperties.h */,
+				B449EB881C5DB787000381FA /* KatieHistoryData+CoreDataProperties.m */,
+				B449EB851C5DB787000381FA /* KatieHistoryData.h */,
+				B449EB861C5DB787000381FA /* KatieHistoryData.m */,
+				B449EB7F1C5DB730000381FA /* KatieAddressData+CoreDataProperties.h */,
+				B449EB801C5DB730000381FA /* KatieAddressData+CoreDataProperties.m */,
+				B449EB811C5DB730000381FA /* KatieAddressData.h */,
+				B449EB821C5DB730000381FA /* KatieAddressData.m */,
 				B4DB59DA1C55AE290043B7FA /* KatieDataManager.h */,
 				B4DB59DB1C55AE290043B7FA /* KatieDataManager.m */,
 				B4DB59C21C55ABA40043B7FA /* KatieModel.xcdatamodeld */,
@@ -363,7 +400,9 @@
 				B45E75351C59674500941E8D /* KatieServices.plist in Resources */,
 				B4E361971C5457A00028AE4A /* LaunchScreen.storyboard in Resources */,
 				B4A576F81C56F31A00236C39 /* mplus-1c-bold.ttf in Resources */,
+				B4FFC5B61C5E83E2009F138C /* CarrierInfoTableViewCell.xib in Resources */,
 				B4E361941C5457A00028AE4A /* Assets.xcassets in Resources */,
+				B449EB7E1C5D9ADE000381FA /* HistoryTableViewCell.xib in Resources */,
 				B4E361921C5457A00028AE4A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,19 +484,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				B45E75391C5967B200941E8D /* UIColor+Hex.m in Sources */,
+				B449EB891C5DB787000381FA /* KatieHistoryData.m in Sources */,
 				B477770C1C595ACB0042B761 /* KatieNetworkRequest.m in Sources */,
 				B4DB59BB1C5557980043B7FA /* KatieColor.m in Sources */,
 				B4DB59C41C55ABA40043B7FA /* KatieModel.xcdatamodeld in Sources */,
+				B449EB8E1C5E7C4F000381FA /* InfoViewController.m in Sources */,
 				B4E3618F1C5457A00028AE4A /* ContactsViewController.m in Sources */,
 				B4A576FC1C56F38A00236C39 /* KatieFonts.m in Sources */,
+				B449EB8A1C5DB787000381FA /* KatieHistoryData+CoreDataProperties.m in Sources */,
+				B449EB7D1C5D9ADE000381FA /* HistoryTableViewCell.m in Sources */,
 				B407A30B1C5832F700398241 /* ContactTableViewCell.m in Sources */,
 				B432AF311C5ABBC9008256F8 /* NSString+Sanitisation.m in Sources */,
+				B4FFC5B51C5E83E2009F138C /* CarrierInfoTableViewCell.m in Sources */,
+				B449EB791C5D9A30000381FA /* HistoryViewController.m in Sources */,
 				B4DB59DC1C55AE290043B7FA /* KatieDataManager.m in Sources */,
+				B449EB841C5DB730000381FA /* KatieAddressData.m in Sources */,
 				B4E3618C1C5457A00028AE4A /* AppDelegate.m in Sources */,
-				B474CF491C5D3885001EEEB5 /* KatieAddressData+CoreDataProperties.m in Sources */,
+				B449EB831C5DB730000381FA /* KatieAddressData+CoreDataProperties.m in Sources */,
 				B4E361891C5457A00028AE4A /* main.m in Sources */,
 				B47777091C595AB00042B761 /* KatieNetworkManager.m in Sources */,
-				B474CF4A1C5D3885001EEEB5 /* KatieAddressData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +510,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4FFC5B81C5ECB05009F138C /* KatieDataManager.m in Sources */,
 				B4E361A21C5457A00028AE4A /* KatieTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,8 +657,17 @@
 		};
 		B4E361AA1C5457A00028AE4A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 86DB3922DE84A152DD91BEF8 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/APAddressBook\"",
+					"\"${PODS_ROOT}/Headers/Public/Flurry-iOS-SDK\"",
+					"\"${PODS_ROOT}/Headers/Public/libPhoneNumber-iOS\"",
+				);
 				INFOPLIST_FILE = KatieTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.manabushimada.KatieTests;

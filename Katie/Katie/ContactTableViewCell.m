@@ -38,7 +38,7 @@
 
 - (void)searchContactWithContactName:(NSString *)contactName
 {
-    KatieAddressData *addressData = [KatieDataManager searchKatieAddressDataForContactName:contactName];
+    KatieAddressData *addressData = [KatieDataManager katieAddressDataForContactName:contactName];
     [self updateWithAddressData:addressData];
 }
 

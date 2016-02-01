@@ -2,7 +2,7 @@
 //  KatieAddressData.m
 //  
 //
-//  Created by manabu shimada on 30/01/2016.
+//  Created by manabu shimada on 31/01/2016.
 //
 //
 
@@ -13,30 +13,21 @@
 @implementation KatieAddressData
 
 // Insert code here to add functionality to your managed object subclass
-
 - (NSDictionary *)dictionaryRepresentation
 {
     
     NSMutableDictionary *dic = [NSMutableDictionary new];
     
-    if (self.calledAt) {
-        [dic setObject:self.calledAt forKey:kKatieCalledAtKey];
-    }
-    
     if (self.createdAt) {
         [dic setObject:self.createdAt forKey:kKatieCreatedAtKey];
     }
-
+    
     if (self.dummyCarrier) {
         [dic setObject:self.dummyCarrier forKey:kKatieDummyCarrierKey];
     }
     
     if (self.favourite) {
         [dic setObject:self.favourite forKey:kKatieFavouriteKey];
-    }
-    
-    if (self.phoneNumberCalled) {
-        [dic setObject:self.phoneNumberCalled forKey:kKatiePhoneNumberCalledKey];
     }
     
     if (self.phoneNumbers) {
@@ -57,10 +48,6 @@
     
     if (self.contactName) {
         [dic setObject:self.contactName forKey:kKatieContactNameKey];
-    }
-    
-    if (self.receivedAt) {
-        [dic setObject:self.receivedAt forKey:kKatieReceivedAtKey];
     }
     
     if (self.carrier) {
@@ -89,5 +76,6 @@
     
     return dic;
 }
+
 
 @end

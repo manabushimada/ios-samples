@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "KatieAddressData.h"
+#import "KatieHistoryData.h"
 
 @interface KatieDataManager : NSObject
 
@@ -19,15 +20,19 @@
 
 + (BOOL) save;
 + (KatieAddressData *)newAddressData;
++ (KatieHistoryData *)newHistoryData;
 
 + (void)registerMyContacts:(NSArray *)contacts;
-+ (KatieAddressData *)searchKatieAddressDataForPhoneNumber:(NSString *)phoneNumber;
-+ (KatieAddressData *)searchKatieAddressDataForContactName:(NSString *)contactName;
-+ (KatieAddressData *)searchKatieAddressDataForMyName:(NSString *)myName;
++ (KatieAddressData *)katieAddressDataForPhoneNumber:(NSString *)phoneNumber;
++ (KatieAddressData *)katieAddressDataForContactName:(NSString *)contactName;
++ (KatieAddressData *)katieAddressDataForMyName:(NSString *)myName;
 + (KatieAddressData *)searchUnsavedKatieAddressDataForContactName:(NSString *)contactName;
 
 + (void)deleteAddressData:(KatieAddressData *)addressData;
 + (void)deleteAllAddressData;
 + (NSArray *) allAddressData;
+
++ (void)deleteHistoryData:(KatieHistoryData *)historyData;
++ (NSArray *) allHistoryData;
 
 @end

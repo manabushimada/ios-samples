@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong) KatieAddressData *addressData;
 
-+ (NSString *)authorizationString:(NSString *)accountSID withAuthToken:(NSString *)authToken;
 
 - (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber;
 - (void)katieAddressDataForContactName:(NSString *)contactName;

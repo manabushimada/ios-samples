@@ -8,8 +8,17 @@
 
 #import "ContactsViewController.h"
 
-#import "KatieNetworkManager.h"
+#import <APAddressBook.h>
+#import <APContact.h>
+
+#import "ContactTableViewCell.h"
+#import "KatieDataManager.h"
+#import "KatieFonts.h"
+#import "KatieColor.h"
+#import "NSString+Sanitisation.h"
 #import "KatieAppConstants.h"
+
+@import CoreTelephony;
 
 @interface ContactsViewController ()
 {
@@ -22,6 +31,8 @@
 @property (nonatomic, strong) APAddressBook *addressBook;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) CTCallCenter* callCenter;
+
 
 @end
 
@@ -33,6 +44,7 @@
     
     [self setupNavigationItem];
     [self setupRefreshControl];
+    [self registerForCalls];
     
     /*----------------------------------------------------------------------------*
      * Instantiate the fetchedResultsController
@@ -44,7 +56,6 @@
         exit(-1);  // Fail
     }
     
-    [self.searchBar setSearchBarStyle:UISearchBarStyleMinimal];
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -91,9 +102,9 @@
     }
     else
     {
-        if (self.apContact)
+        if (self.fetchedResultsController.fetchedObjects.count)
         {
-            return self.apContact.count;
+            return self.fetchedResultsController.fetchedObjects.count;
         }
         else
         {
@@ -124,33 +135,23 @@
     return cell;
 }
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-//    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-//        NSDictionary *contactDetailsDictionary = [_arrContactsData objectAtIndex:self.tableView.indexPathForSelectedRow.row];
-//        [[segue destinationViewController] setDictContactDetails:contactDetailsDictionary];
-//    }
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath
 {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (!tableView.isEditing)
     {
-        KatieAddressData *addressData;
         if (tableView == self.searchDisplayController.searchResultsTableView)
         {
-            addressData = [KatieDataManager searchKatieAddressDataForContactName:searchResults[indexPath.row]];
+            self.addressDataCalled = [KatieDataManager katieAddressDataForContactName:searchResults[indexPath.row]];
         }
         else
         {
-            addressData = self.fetchedResultsController.fetchedObjects[indexPath.row];
+            self.addressDataCalled = self.fetchedResultsController.fetchedObjects[indexPath.row];
         }
         
         // About to Call this number
-        [self phoneCallButtonPressed:[NSString stringByRemovingSpaces:addressData.phoneNumber]];
+        [self callPhoneNumber:[NSString stringByRemovingSpaces:self.addressDataCalled.phoneNumber]];
     }
 }
 
@@ -314,24 +315,70 @@
   @{NSForegroundColorAttributeName : [KatieColor yvesKleinBlue], NSFontAttributeName : [KatieFonts katieFontNavigationItem]};
 }
 
+- (void)registerForCalls
+{
+    self.callCenter = [[CTCallCenter alloc] init];
+    // NSLog(@"registering for call center events");
+    __weak typeof(self) weakSelf = self;
+    [self.callCenter setCallEventHandler:^(CTCall *call)
+     {
+         
+         if ([call.callState isEqualToString: CTCallStateConnected])
+         {
+             
+         }
+         else if ([call.callState isEqualToString: CTCallStateDialing])
+         {
+             if (weakSelf.addressDataCalled)
+             {
+                 KatieHistoryData *historyData = [KatieDataManager newHistoryData];
+                 [historyData setCalledAt:[NSDate date]];
+                 [historyData setContactNameCalled:weakSelf.addressDataCalled.contactName];
+                 [historyData setPhoneNumberCalled:weakSelf.addressDataCalled.phoneNumber];
+                 [historyData setDummyCarrier:weakSelf.addressDataCalled.dummyCarrier];
+                 [historyData setCarrierColor:weakSelf.addressDataCalled.carrierColor];
+                 [KatieDataManager save];
+             }
+
+             // TODO: Populate history of callings from HistoryViewContorller
+//             KatieHistoryData *historyData = [KatieDataManager newHistoryData];
+//             [historyData setCalledAt:[NSDate date]];
+//             NSLog(@"caontcat %@", weakSelf.historyDataCalled.contactNameCalled);
+//             [historyData setContactNameCalled:weakSelf.historyDataCalled.contactNameCalled];
+//             [historyData setPhoneNumberCalled:weakSelf.historyDataCalled.phoneNumberCalled];
+//             [historyData setDummyCarrier:weakSelf.historyDataCalled.dummyCarrier];
+//             [historyData setCarrierColor:weakSelf.historyDataCalled.carrierColor];
+//             [KatieDataManager save];
+         }
+         else if ([call.callState isEqualToString: CTCallStateDisconnected])
+         {
+             
+         }
+         else if ([call.callState isEqualToString: CTCallStateIncoming])
+         {
+             
+         }
+         NSLog(@"\n\n callEventHandler: %@ \n\n ID: %@", call.callState, call.callID);
+    }];
+}
+
 #pragma mark - Actions
 
-- (void)phoneCallButtonPressed:(NSString *)phoneNumber
+- (void)callPhoneNumber:(NSString *)phoneNumber
 {
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phoneNumber]];
     
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl])
     {
         [[UIApplication sharedApplication] openURL:phoneUrl];
-        
-        // Save the phone number for history
     }
     else
     {
-        //        [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        //        [calert show];
+        UIAlertView *calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        [calert show];
     }
 }
+
 
 - (void)reloadTableView
 {
@@ -346,18 +393,11 @@
     [self updateMyContacts];
     [self.tableView reloadData];
     
-    NSArray *datas = [KatieDataManager allAddressData];
-    for (KatieAddressData *addressData in datas)
-    {
-        NSLog(@"Data in coredata %@", [addressData dictionaryRepresentation]);
-    }
-    
     // End the refreshing
     if (self.refreshControl) {
         [self.refreshControl endRefreshing];
     }
 }
-
 
 #pragma mark - NSFetchedResultsController Delegate
 
@@ -397,20 +437,19 @@
         return;
     }
     
-    /**
     switch (type)
     {
         case NSFetchedResultsChangeInsert: // Called when inserting a new data into CoreData
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
             break;
         case NSFetchedResultsChangeDelete: // Called when deleting it
-            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:newIndexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         default:
             break;
     }
-     */
+
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
@@ -419,7 +458,6 @@
     [self.tableView endUpdates];
     [self.tableView reloadData];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

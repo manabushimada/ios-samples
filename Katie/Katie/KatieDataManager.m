@@ -98,6 +98,14 @@ static KatieDataManager *sharedMyManager = nil;
     
 }
 
++ (KatieHistoryData *)newHistoryData
+{
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    KatieHistoryData *newHistoryData = (KatieHistoryData *) [NSEntityDescription insertNewObjectForEntityForName:@"KatieHistoryData" inManagedObjectContext:moc];
+    return newHistoryData;
+    
+}
+
 + (void)registerMyContacts:(NSArray *)contacts
 {
     NSArray *fetchedObjects;
@@ -111,7 +119,8 @@ static KatieDataManager *sharedMyManager = nil;
     
     if (fetchedObjects.count == 0)
     {
-        // For an user's device
+        /**
+        // TODO: Register an user's device
         KatieAddressData *myAddressData = [KatieDataManager newAddressData];
         [myAddressData setMyName:[[UIDevice currentDevice] name]];
         //[myAddressData setMyPhoneNumber:] // Apple doesn't allow us to get my number unfortunately.
@@ -120,7 +129,8 @@ static KatieDataManager *sharedMyManager = nil;
         [myAddressData setCarrierColor:[KatieNetworkManager carrierColorHex:myAddressData.dummyCarrier]];
         [KatieDataManager save];
         NSLog(@"saved my address");
-
+         */
+        
         dispatch_group_t dispatchGroup = dispatch_group_create();
         // For contacts from user's address
         for (APContact *contact in contacts)
@@ -141,7 +151,7 @@ static KatieDataManager *sharedMyManager = nil;
     }
 }
 
-+ (KatieAddressData *)searchKatieAddressDataForPhoneNumber:(NSString *)phoneNumber
++ (KatieAddressData *)katieAddressDataForPhoneNumber:(NSString *)phoneNumber
 {
     NSArray *fetchedObjects;
     NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
@@ -165,7 +175,7 @@ static KatieDataManager *sharedMyManager = nil;
     return nil;
 }
 
-+ (KatieAddressData *)searchKatieAddressDataForContactName:(NSString *)contactName
++ (KatieAddressData *)katieAddressDataForContactName:(NSString *)contactName
 {
     NSArray *fetchedObjects;
     NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
@@ -215,7 +225,7 @@ static KatieDataManager *sharedMyManager = nil;
     return nil;
 }
 
-+ (KatieAddressData *)searchKatieAddressDataForMyName:(NSString *)myName
++ (KatieAddressData *)katieAddressDataForMyName:(NSString *)myName
 {
     NSArray *fetchedObjects;
     NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
@@ -248,6 +258,16 @@ static KatieDataManager *sharedMyManager = nil;
     
 }
 
++ (void)deleteHistoryData:(KatieHistoryData *)historyData
+{
+    if (historyData)
+    {
+        [[KatieDataManager sharedManager].managedObjectContext deleteObject:historyData];
+        [KatieDataManager save];
+    }
+    
+}
+
 + (void)deleteAllAddressData
 {
     NSManagedObjectContext *managedObjectContext = [KatieDataManager sharedManager].managedObjectContext;
@@ -271,7 +291,22 @@ static KatieDataManager *sharedMyManager = nil;
     NSError *error = nil;
     NSArray *results = [moc executeFetchRequest:request error:&error];
     if (!results) {
-        DLog(@"Error fetching KatieAddressData objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        NSLog(@"Error fetching KatieAddressData objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    
+    return results;
+}
+
++ (NSArray *) allHistoryData
+{
+    NSManagedObjectContext *moc =[KatieDataManager sharedManager].managedObjectContext;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"KatieHistoryData"];
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching KatieHistoryData objects: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
     }
     

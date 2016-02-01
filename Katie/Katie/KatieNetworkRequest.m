@@ -11,22 +11,6 @@
 
 @implementation KatieNetworkRequest
 
-
-#pragma mark - Authorization
-
-+ (NSString *)authorizationString:(NSString *)accountSID withAuthToken:(NSString *)authToken
-{
-    if (!accountSID && !authToken)
-    {
-        return nil;
-    }
-    
-    NSString *authStr = [NSString stringWithFormat:@"%@:%@", accountSID, authToken];
-    NSData *authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
-    NSString *authDataString = [authData base64EncodedStringWithOptions:0];
-    return [NSString stringWithFormat:@"Basic %@", authDataString];
-}
-
 - (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -46,11 +30,11 @@
 
 - (void)registerLookupJSONResponse:(NSDictionary *)data
 {
-    NSLog(@"address data %@ dummy %@", self.addressData.phoneNumber, self.addressData.dummyCarrier);
     if (self.addressData)
     {
         if (!self.addressData.dummyCarrier)
         {
+            NSLog(@"save data from lookup %@ dummy %@", self.addressData.phoneNumber, self.addressData.dummyCarrier);
             [self.addressData setDummyCarrier:[KatieNetworkManager randomCarrier]];
             [self.addressData setNationalFormat:data[kTwilioLookupNationalFormatKey]];
             [self.addressData setCarrierColor:[KatieNetworkManager carrierColorHex:self.addressData.dummyCarrier]];
@@ -65,7 +49,6 @@
     if (contactName)
     {
         self.addressData = [KatieDataManager searchUnsavedKatieAddressDataForContactName:contactName];
-        //NSLog(@"original address data %@", self.addressData);
     }
 }
 
@@ -75,7 +58,7 @@
     {
         if (!self.addressData.dummyCarrier)
         {
-            [self.addressData setDummyCarrier:@"Unknown"]; // Hex a5a5a5
+            [self.addressData setDummyCarrier:@"Unknown"]; 
             [self.addressData setCarrierColor:@"a5a5a5"];
             [KatieDataManager save];
         }
