@@ -11,6 +11,10 @@
 @interface NSString (Sanitisation)
 
 + (NSString *)stringByRemovingSpaces:(NSString *)string;
-
++ (NSString *)stringByRemovingAlphabets:(NSString *)string;
++ (NSString *)stringByAddingCountryCode:(NSString *)string;
++ (NSString *)stringByReplacingPhoneNumber:(NSString *)string;
++ (BOOL)isStringContainingCountryCode:(NSString *)string;
++ (BOOL)isStringContainingMultibyteString:(NSString *)string;
 
 @end

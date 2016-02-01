@@ -7,27 +7,62 @@
 //
 
 #import "KatieNetworkRequest.h"
+#import "KatieNetworkManager.h"
 
 @implementation KatieNetworkRequest
 
-
-- (void)queryLookupAPI:(NSUInteger)phoneNumber
+- (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber
 {
-    /**
-    NSString *urlAsString = [NSString stringWithFormat:@"https://lookups.twilio.com/v1/PhoneNumbers/+819021668768", coordinate.latitude, coordinate.longitude, PAGE_COUNT, API_KEY];
-    NSURL *url = [[NSURL alloc] initWithString:urlAsString];
-    NSLog(@"%@", urlAsString);
-    
-    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        if (error) {
-            [self.delegate fetchingLookupFailedWithError:error];
-        } else {
-            [self.delegate receivedLookupJSON:data];
-        }
-    }];
-     */
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:kTwilioLookupAccountSidKey password:kTwilioLookupAuthTokenKey];
+    [manager GET:[NSString stringWithFormat:@"%@%@",kTwilioLookupResourceURL, phoneNumber] parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject)
+     {
+         NSLog(@"JSON: %@ ", responseObject);
+         [self registerLookupJSONResponse:responseObject];
+     }
+         failure:^(NSURLSessionTask *operation, NSError *error)
+     {
+         // TODO: Nonexisting number is "Unknow" filtered by numberOfErrors value
+         //[self registerLookupErrorJSONRessponces];
+         NSLog(@"Error: %@", error);
+     }];
 }
 
+- (void)registerLookupJSONResponse:(NSDictionary *)data
+{
+    if (self.addressData)
+    {
+        if (!self.addressData.dummyCarrier)
+        {
+            NSLog(@"save data from lookup %@ dummy %@", self.addressData.phoneNumber, self.addressData.dummyCarrier);
+            [self.addressData setDummyCarrier:[KatieNetworkManager randomCarrier]];
+            [self.addressData setNationalFormat:data[kTwilioLookupNationalFormatKey]];
+            [self.addressData setCarrierColor:[KatieNetworkManager carrierColorHex:self.addressData.dummyCarrier]];
+            [self.addressData setUrl:data[kTwilioLookupUrlKey]];
+            [KatieDataManager save];
+        }
+    }
+}
+
+- (void)katieAddressDataForContactName:(NSString *)contactName
+{
+    if (contactName)
+    {
+        self.addressData = [KatieDataManager searchUnsavedKatieAddressDataForContactName:contactName];
+    }
+}
+
+- (void)registerLookupErrorJSONRessponces
+{
+    if (self.addressData)
+    {
+        if (!self.addressData.dummyCarrier)
+        {
+            [self.addressData setDummyCarrier:@"Unknown"]; 
+            [self.addressData setCarrierColor:@"a5a5a5"];
+            [KatieDataManager save];
+        }
+    }
+}
 
 @end

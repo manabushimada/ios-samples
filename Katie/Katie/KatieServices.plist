@@ -64,6 +64,12 @@
 			<key>Hex</key>
 			<string>4cd2ff</string>
 		</dict>
+		<dict>
+			<key>Carrier</key>
+			<string>Unknown</string>
+			<key>Hex</key>
+			<string>a5a5a5</string>
+		</dict>
 	</array>
 	<key>CarrierColorPicker</key>
 	<array>

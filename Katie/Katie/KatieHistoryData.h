@@ -1,8 +1,8 @@
 //
-//  KatieLookupData.h
+//  KatieHistoryData.h
 //  
 //
-//  Created by manabu shimada on 27/01/2016.
+//  Created by manabu shimada on 31/01/2016.
 //
 //
 
@@ -11,12 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface KatieLookupData : NSManagedObject
+@interface KatieHistoryData : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
+- (NSDictionary *)dictionaryRepresentation;
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "KatieLookupData+CoreDataProperties.h"
+#import "KatieHistoryData+CoreDataProperties.h"

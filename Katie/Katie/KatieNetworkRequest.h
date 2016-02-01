@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@protocol KatieNetworkRequestDelegate
-- (void)receivedLookupJSON:(NSData *)objectNotation;
-- (void)fetchingLookupFailedWithError:(NSError *)error;
-@end
+#import <AFHTTPSessionManager.h>
+#import "KatieDataManager.h"
+#import "KatieAppConstants.h"
 
 @interface KatieNetworkRequest : NSObject
 
-@property (weak, nonatomic) id<KatieNetworkRequestDelegate> delegate;
+@property (nonatomic, strong) KatieAddressData *addressData;
 
-//- (void)searchGroupsAtCoordinate:(CLLocationCoordinate2D)coordinate;
+
+- (void)queryLookupAPIByPhoneNumber:(NSString *)phoneNumber;
+- (void)katieAddressDataForContactName:(NSString *)contactName;
 
 @end

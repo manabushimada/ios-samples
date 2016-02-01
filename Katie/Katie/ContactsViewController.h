@@ -8,26 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import <APAddressBook.h>
-#import <APContact.h>
 
-#import "ContactTableViewCell.h"
-#import "KatieDataManager.h"
-#import "KatieFonts.h"
-#import "KatieColor.h"
-
-#import "NSString+Sanitisation.h"
+#import "KatieNetworkManager.h"
 
 @interface ContactsViewController : UIViewController
 <UITableViewDelegate,
 UITableViewDataSource,
 NSFetchedResultsControllerDelegate,
 UISearchBarDelegate,
-UISearchDisplayDelegate>
+UISearchDisplayDelegate,
+UIAlertViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+
+@property (nonatomic, strong) KatieAddressData *addressDataCalled;
 
 @end
 

@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "KatieNetworkRequest.h"
+
 @interface KatieNetworkManager : NSObject
 
 + (KatieNetworkManager *) sharedManager;
-+ (NSDictionary *)randomCarrier;
++ (NSString *)randomCarrier;
++ (NSDictionary *)randomCarrierDictionary;
++ (NSString *)carrierColorHex:(NSString *)carrier;
++ (NSArray *)carrierArrayInPlist;
+
+- (void)getContactDataWithPhoneNumber:(NSString *)phoneNumber contactName:(NSString *)contactName;
 
 @end

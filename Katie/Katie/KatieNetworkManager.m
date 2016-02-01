@@ -8,6 +8,8 @@
 
 #import "KatieNetworkManager.h"
 
+
+
 static KatieNetworkManager *_manager = nil;
 
 @implementation KatieNetworkManager
@@ -27,7 +29,27 @@ static KatieNetworkManager *_manager = nil;
     return _manager;
 }
 
-+ (NSDictionary *)randomCarrier
+- (instancetype)init
+{
+    self = [super init];
+    if (!self) return nil;
+    
+    
+    
+    return self;
+}
+
+- (void)getContactDataWithPhoneNumber:(NSString *)phoneNumber contactName:(NSString *)contactName
+{
+    KatieNetworkRequest *request = [KatieNetworkRequest new];
+    [request queryLookupAPIByPhoneNumber:phoneNumber];
+    [request katieAddressDataForContactName:contactName];
+}
+
+
+#pragma mark - Utils
+
++ (NSDictionary *)randomCarrierDictionary
 {
     /*----------------------------------------------------------------------------*
      * Lookup by Twilio is a paid service. 
@@ -41,5 +63,46 @@ static KatieNetworkManager *_manager = nil;
     
     return dict;
 }
+
++ (NSString *)randomCarrier
+{
+    /*----------------------------------------------------------------------------*
+     * Lookup by Twilio is a paid service.
+     * The reason why I would like to use a plist instead of that service
+     * in order to fetch a mobile carrier mapping each of your contacts.
+     *----------------------------------------------------------------------------*/
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"KatieServices" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSArray *array = [NSArray arrayWithArray:[dic objectForKey:@"CarrierPicker"]];
+    NSDictionary *dict = array[rand()%(array.count-1)]; // -1 to remove 'Unknow' carrier
+    NSString *carrier = dict[@"Carrier"];
+    
+    return carrier;
+}
+
++ (NSString *)carrierColorHex:(NSString *)carrier
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"KatieServices" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSArray *array = [NSArray arrayWithArray:[dic objectForKey:@"CarrierPicker"]];
+    
+    for (NSDictionary *dict in array) {
+        if ([dict[@"Carrier"] isEqualToString:carrier]) {
+            return dict[@"Hex"];
+        }
+    }
+    
+    return @"000000";
+}
+
++ (NSArray *)carrierArrayInPlist
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"KatieServices" ofType:@"plist"];
+    NSDictionary *dic = [NSDictionary dictionaryWithContentsOfFile:path];
+    NSArray *array = [NSArray arrayWithArray:[dic objectForKey:@"CarrierPicker"]];
+
+    return array;
+}
+
 
 @end

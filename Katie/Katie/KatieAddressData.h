@@ -2,7 +2,7 @@
 //  KatieAddressData.h
 //  
 //
-//  Created by manabu shimada on 29/01/2016.
+//  Created by manabu shimada on 31/01/2016.
 //
 //
 
@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KatieAddressData : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
+- (NSDictionary *)dictionaryRepresentation;
 
 @end
 
